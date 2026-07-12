@@ -33,6 +33,12 @@ tags:
   - Media
 apis: []
 common:
+  - type: VulnerabilityDisclosure
+    url: security/sinclair-broadcast-group-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/sinclair-broadcast-group-domain-security.yml
+  - url: https://sbgi.net/feed/
+    type: Blog
   - type: Portal
     url: https://sbgi.net
   - type: GitHubOrganization
