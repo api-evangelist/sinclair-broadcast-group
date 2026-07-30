@@ -15,6 +15,17 @@ description: >-
   in March 2023, exited bankruptcy in January 2025 as Main Street Sports Group,
   rebranded again as FanDuel Sports Network, and is winding down operations
   in mid-2026. Sinclair publishes no public developer APIs.
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
 image: https://avatars.githubusercontent.com/u/api-evangelist
 url: https://github.com/api-evangelist/sinclair-broadcast-group
 created: '2026-05-05'
