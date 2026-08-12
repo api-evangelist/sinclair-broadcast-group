@@ -1,0 +1,54 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live response headers from https://sbgi.net/wp-json/wp/v2/posts?per_page=2 observed
+  2026-08-12; no rate-limit documentation exists to search.
+limit_count: 0
+documented: false
+summary: >-
+  Sinclair publishes no rate limits for the corporate content API and returns no
+  rate-limit response headers. That is an honest zero, not an unmetered promise: the
+  surface sits behind Cloudflare and WP Engine, either of which may shed load without
+  a documented signal, and the only published pacing hint anywhere on the property is
+  the Crawl-delay directive in robots.txt.
+limits: []
+response_headers:
+  ratelimit_standard: false
+  x_ratelimit: false
+  retry_after: false
+  observed: []
+  note: >-
+    None of RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset, X-RateLimit-*, or
+    Retry-After were present on any 200 or 4xx response observed. An agent has no
+    runtime signal to back off on.
+exhaustion:
+  status_code: null
+  body: null
+  note: Not observed. No throttling was triggered during this probe and none is documented.
+pacing_guidance:
+  source: https://sbgi.net/robots.txt
+  crawl_delay_seconds: 10
+  note: >-
+    robots.txt declares Crawl-delay 10 for all user agents and disallows nothing. This
+    is a crawler directive rather than an API rate limit, but it is the only pacing
+    number Sinclair publishes anywhere, so it is the most defensible interval to
+    respect. Combined with the 600-second cache-control window on API responses,
+    polling faster than once per ten minutes returns nothing new.
+infrastructure:
+  edge: Cloudflare
+  origin: WP Engine
+  cache_control_max_age: 600
+  note: >-
+    A per-response cache-control of max-age=600 caps the useful polling rate far below
+    any limit that would need enforcing.
+evidence:
+  - url: https://sbgi.net/wp-json/wp/v2/posts?per_page=2
+    status: 200
+    finding: no rate-limit headers present on a successful response
+  - url: https://sbgi.net/wp-json/wp/v2/posts?per_page=999
+    status: 400
+    finding: no Retry-After present on a rejected request
+  - url: https://sbgi.net/robots.txt
+    status: 200
+    finding: 'Crawl-delay: 10; Disallow: (empty)'
+docs: null

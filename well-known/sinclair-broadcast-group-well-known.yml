@@ -1,0 +1,192 @@
+generated: '2026-08-12'
+method: probed
+source: live HTTP probes of every Sinclair-controlled host in apis.yml
+note: >-
+  sbgi.net serves a real, minimal security.txt (HTTP 200, two directives). Every
+  other /.well-known/ path on sbgi.net returns HTTP 404 with the site's HTML 404
+  page. The subsidiary hosts were probed as well: dielectric.com, digitalremedy.com
+  and comettv.com return the standard WordPress 404 for all well-known paths, while
+  tennischannel.com and compulse.com are single-page apps that answer HTTP 200 with
+  an HTML shell for EVERY path probed — those 200s are catch-alls, not documents,
+  and are recorded here as misses so a future round does not mistake them for hits.
+hosts:
+  - host: sbgi.net
+    paths:
+      - path: /.well-known/security.txt
+        url: https://sbgi.net/.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        document: true
+        file: well-known/sinclair-broadcast-group-security.txt
+      - path: /.well-known/openid-configuration
+        url: https://sbgi.net/.well-known/openid-configuration
+        status: 404
+        document: false
+      - path: /.well-known/oauth-authorization-server
+        url: https://sbgi.net/.well-known/oauth-authorization-server
+        status: 404
+        document: false
+      - path: /.well-known/oauth-protected-resource
+        url: https://sbgi.net/.well-known/oauth-protected-resource
+        status: 404
+        document: false
+      - path: /.well-known/api-catalog
+        url: https://sbgi.net/.well-known/api-catalog
+        status: 404
+        document: false
+      - path: /.well-known/ai-plugin.json
+        url: https://sbgi.net/.well-known/ai-plugin.json
+        status: 404
+        document: false
+      - path: /.well-known/agent-card.json
+        url: https://sbgi.net/.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /.well-known/agent.json
+        url: https://sbgi.net/.well-known/agent.json
+        status: 404
+        document: false
+      - path: /llms.txt
+        url: https://sbgi.net/llms.txt
+        status: 404
+        document: false
+      - path: /openapi.json
+        url: https://sbgi.net/openapi.json
+        status: 404
+        document: false
+      - path: /graphql
+        url: https://sbgi.net/graphql
+        status: 404
+        document: false
+      - path: /wp-json/
+        url: https://sbgi.net/wp-json/
+        status: 200
+        content_type: application/json
+        document: true
+        note: >-
+          Not a /.well-known/ path, but this is the machine-readable discovery
+          document this company actually serves — the WordPress REST API route
+          index, 271 routes across 14 namespaces. Captured verbatim at
+          openapi/_original/sinclair-broadcast-group-wp-json-index.json and
+          derived into openapi/sinclair-broadcast-group-content-openapi.yml.
+  - host: dielectric.com
+    paths:
+      - path: /.well-known/agent-card.json
+        url: https://dielectric.com/.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /openapi.json
+        url: https://dielectric.com/openapi.json
+        status: 404
+        document: false
+      - path: /llms.txt
+        url: https://dielectric.com/llms.txt
+        status: 404
+        document: false
+      - path: /wp-json/
+        url: https://dielectric.com/wp-json/
+        status: 200
+        content_type: application/json
+        document: true
+        note: >-
+          Dielectric (Sinclair's broadcast RF/antenna subsidiary) also runs
+          WordPress and serves a REST index, but it exposes only stock wp/v2
+          content routes with no first-party namespace, so no spec was derived.
+  - host: digitalremedy.com
+    paths:
+      - path: /.well-known/agent-card.json
+        url: https://digitalremedy.com/.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /openapi.json
+        url: https://digitalremedy.com/openapi.json
+        status: 404
+        document: false
+      - path: /llms.txt
+        url: https://digitalremedy.com/llms.txt
+        status: 404
+        document: false
+      - path: /wp-json/
+        url: https://digitalremedy.com/wp-json/
+        status: 200
+        content_type: application/json
+        document: true
+  - host: comettv.com
+    paths:
+      - path: /.well-known/agent-card.json
+        url: https://comettv.com/.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /llms.txt
+        url: https://comettv.com/llms.txt
+        status: 404
+        document: false
+      - path: /wp-json/
+        url: https://comettv.com/wp-json/
+        status: 200
+        content_type: application/json
+        document: true
+  - host: tennischannel.com
+    spa_catchall: true
+    paths:
+      - path: /.well-known/agent-card.json
+        url: https://tennischannel.com/.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /openapi.json
+        url: https://tennischannel.com/openapi.json
+        status: 200
+        content_type: text/html
+        document: false
+        note: HTML shell returned by the SPA catch-all, not a spec. Treated as a miss.
+      - path: /llms.txt
+        url: https://tennischannel.com/llms.txt
+        status: 200
+        content_type: text/html
+        document: false
+        note: HTML shell returned by the SPA catch-all. Treated as a miss.
+  - host: compulse.com
+    spa_catchall: true
+    paths:
+      - path: /.well-known/agent-card.json
+        url: https://compulse.com/.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        document: false
+        note: >-
+          HTML shell. compulse.com answers 200 with the same 84KB HTML body for
+          every path probed, including /openapi.json and /llms.txt. Not a hit.
+      - path: /openapi.json
+        url: https://compulse.com/openapi.json
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /llms.txt
+        url: https://compulse.com/llms.txt
+        status: 200
+        content_type: text/html
+        document: false
+      - path: /wp-json/
+        url: https://compulse.com/wp-json/
+        status: 200
+        content_type: application/json
+        document: true
+  - host: thenationaldesk.com
+    paths:
+      - path: /wp-json/
+        url: https://thenationaldesk.com/wp-json/
+        status: 404
+        document: false
+      - path: /.well-known/agent-card.json
+        url: https://thenationaldesk.com/.well-known/agent-card.json
+        status: 404
+        document: false
+summary:
+  paths_probed: 34
+  documents_found: 7
+  security_txt: true
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false

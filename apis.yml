@@ -14,22 +14,36 @@ description: >-
   joint venture; Diamond was rebranded Bally Sports in 2021, filed Chapter 11
   in March 2023, exited bankruptcy in January 2025 as Main Street Sports Group,
   rebranded again as FanDuel Sports Network, and is winding down operations
-  in mid-2026. Sinclair publishes no public developer APIs.
+  in mid-2026. Sinclair runs no developer program and publishes no API
+  documentation, but its corporate site at sbgi.net serves a live, public,
+  unauthenticated WordPress REST API whose first-party sbg/v1 namespace
+  publishes the company's full television station footprint — 197 primary
+  stations and 365 digital subchannels across 87 Nielsen DMAs, with network
+  affiliation, market rank and O&O/JSA/LMA/MSA ownership status attached to
+  every call sign — alongside 1,753 press releases and the regional sports
+  network territories.
 accessModel:
-  pricing: unknown
-  onboarding: unknown
+  pricing: free
+  onboarding: none
   trial: false
-  try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  try_now: true
+  public: true
+  label: Open / No Registration
+  confidence: high
+  note: >-
+    The corporate content API at sbgi.net/wp-json answers anonymously with no key,
+    no signup and no quota. This is unpriced and uncommitted infrastructure rather
+    than a published free tier — Sinclair offers no plans, no terms of use specific
+    to the API, and no guarantee the routes persist.
+  source:
+    - https://sbgi.net/wp-json/wp/v2/posts?per_page=1
+    - https://sbgi.net/wp-json/sbg/v1/station-map
+  generated: '2026-08-12'
+  method: probed
 image: https://avatars.githubusercontent.com/u/api-evangelist
 url: https://github.com/api-evangelist/sinclair-broadcast-group
 created: '2026-05-05'
-modified: '2026-05-23'
+modified: '2026-08-12'
 specificationVersion: '0.20'
 tags:
   - Broadcasting
@@ -42,12 +56,81 @@ tags:
   - NextGen TV
   - ATSC 3.0
   - Media
-apis: []
+apis:
+  - name: Sinclair Corporate Content API
+    description: >-
+      The public, unauthenticated read surface of Sinclair's corporate site at
+      sbgi.net. Sinclair runs no developer program and publishes no API
+      reference, but the site is WordPress and serves a live REST API at
+      /wp-json/ whose index advertises 271 routes across 14 namespaces. Beyond
+      the standard wp/v2 content routes, Sinclair ships a first-party sbg/v1
+      namespace: station-map returns the company's full television station
+      footprint (call letters, network affiliation, DMA name and DMA rank,
+      O&O/JSA/SSA ownership status, logo and street address), rsn-map returns
+      the regional sports network territories with the teams each carries,
+      world-locations powers the interactive Sinclair World experience, and
+      latest-posts returns the newsroom feed. Content reads (posts, pages,
+      media, categories, search, types, taxonomies, statuses) answer
+      anonymously with HTTP 200; users, settings and plugins return HTTP 401.
+      This is an undocumented public read surface, not a supported product.
+    humanURL: https://sbgi.net/
+    baseURL: https://sbgi.net/wp-json
+    tags:
+      - Content
+      - Press Releases
+      - Broadcasting
+      - Television Stations
+      - WordPress
+    properties:
+      - type: OpenAPI
+        url: openapi/sinclair-broadcast-group-content-openapi.yml
+      - type: Documentation
+        url: https://developer.wordpress.org/rest-api/
+      - type: APIReference
+        url: https://sbgi.net/wp-json/
+      - type: Authentication
+        url: authentication/sinclair-broadcast-group-authentication.yml
+      - type: Conventions
+        url: conventions/sinclair-broadcast-group-conventions.yml
+      - type: ErrorCatalog
+        url: errors/sinclair-broadcast-group-problem-types.yml
+      - type: DataModel
+        url: data-model/sinclair-broadcast-group-data-model.yml
+      - type: RateLimits
+        url: rate-limits/sinclair-broadcast-group-rate-limits.yml
+      - type: Conformance
+        url: conformance/sinclair-broadcast-group-conformance.yml
+      - type: Lifecycle
+        url: lifecycle/sinclair-broadcast-group-lifecycle.yml
+      - type: Overlay
+        url: overlays/sinclair-broadcast-group-content-overlay.yaml
+      - type: MCPServer
+        url: mcp/sinclair-broadcast-group-mcp.yml
 common:
   - type: VulnerabilityDisclosure
     url: security/sinclair-broadcast-group-vulnerability-disclosure.yml
+  - type: Security
+    url: security/sinclair-broadcast-group-vulnerability-disclosure.yml
   - type: DomainSecurity
     url: security/sinclair-broadcast-group-domain-security.yml
+  - type: WellKnown
+    url: well-known/sinclair-broadcast-group-well-known.yml
+  - type: SecurityTxt
+    url: well-known/sinclair-broadcast-group-security.txt
+  - type: LLMsTxt
+    url: llms/sinclair-broadcast-group-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Packages
+    url: packages/sinclair-broadcast-group-packages.yml
+  - type: Plans
+    url: plans/sinclair-broadcast-group-plans-pricing.yml
+  - type: PrivacyPolicy
+    url: https://sbgi.net/privacy-policy/
+  - type: TermsOfService
+    url: https://sbgi.net/terms-conditions/
+  - type: Support
+    url: https://sbgi.net/contact-us/
   - url: https://sbgi.net/feed/
     type: Blog
   - type: Portal
@@ -187,3 +270,8 @@ common:
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v1

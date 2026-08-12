@@ -1,0 +1,120 @@
+# OpenAPI Overlay 1.0.0 — API Evangelist enhancements over the derived Sinclair spec.
+# The overlay records what WE added on top of what Sinclair's own route index states.
+# It never mutates openapi/sinclair-broadcast-group-content-openapi.yml.
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Sinclair Corporate Content API
+  version: 1.0.0
+extends: ../openapi/sinclair-broadcast-group-content-openapi.yml
+x-generated: '2026-08-12'
+x-method: generated
+x-source: >-
+  Live observation of https://sbgi.net/wp-json/ on 2026-08-12. Everything asserted here
+  was measured; nothing was inferred from documentation, because Sinclair publishes none.
+actions:
+  - target: $.info
+    description: Record that Sinclair publishes no reference documentation, terms or support channel for this surface.
+    update:
+      x-provider-documented: false
+      x-developer-program: false
+      x-support-channel: https://sbgi.net/contact-us/
+      x-terms: https://sbgi.net/terms-conditions/
+      x-terms-note: General website terms and conditions. There are no API-specific terms.
+
+  - target: $.info
+    description: Record the observed access constraint that is not visible in the route descriptors.
+    update:
+      x-cors-allow-origin: https://sbgi.net
+      x-browser-accessible-cross-origin: false
+      x-cache-control-max-age: 600
+      x-crawl-delay-seconds: 10
+
+  - target: $.paths['/sbg/v1/station-map'].get
+    description: Record measured payload size, record counts and the absence of any filtering.
+    update:
+      x-record-count: 101
+      x-record-count-note: 101 location records containing 197 primary stations and 365 subchannels.
+      x-distinct-dmas: 87
+      x-response-bytes: 136660
+      x-paginated: false
+      x-filterable: false
+      x-measured-at: '2026-08-12'
+      x-value-note: >-
+        This is the highest-value route on the surface. It is the only machine-readable
+        publication of Sinclair's full station footprint with DMA rank and ownership
+        status (O&O / JSA / LMA / MSA / OSA) attached to each call sign.
+
+  - target: $.paths['/sbg/v1/rsn-map'].get
+    description: Flag that the payload is stale relative to the company's own rebrands.
+    update:
+      x-record-count: 19
+      x-response-bytes: 6378
+      x-paginated: false
+      x-data-currency: stale
+      x-data-currency-note: >-
+        Payload still carries Bally Sports titles and ballysports.com links. The RSNs
+        moved to Main Street Sports Group and then to FanDuel Sports Network. The route
+        is live; the data behind it has not tracked two rebrands.
+      x-measured-at: '2026-08-12'
+
+  - target: $.paths['/sbg/v1/world-page'].get
+    description: Flag the soft-failure mode where a 200 carries a failure body.
+    update:
+      x-soft-failure: true
+      x-soft-failure-body: '{"success": false}'
+      x-soft-failure-note: >-
+        Returns HTTP 200 with success:false when called without the selector the
+        corporate front end supplies. Branch on the body, not the status code.
+
+  - target: $.paths['/sbg/v1/world-locations'].get
+    description: Record measured payload size.
+    update:
+      x-response-bytes: 92598
+      x-paginated: false
+      x-measured-at: '2026-08-12'
+
+  - target: $.paths['/wp/v2/posts'].get
+    description: Record the live collection size behind this route.
+    update:
+      x-total-records: 1753
+      x-total-pages-at-default: 877
+      x-measured-at: '2026-08-12'
+
+  - target: $.paths['/wp/v2/tags'].get
+    description: Record that this collection is live but empty, so a consumer does not build against it.
+    update:
+      x-empty-collection: true
+      x-measured-at: '2026-08-12'
+
+  - target: $.paths['/wp/v2/comments'].get
+    description: Record that this collection is live but empty.
+    update:
+      x-empty-collection: true
+      x-measured-at: '2026-08-12'
+
+  - target: $.components.schemas.WPError
+    description: Point the error envelope at the full catalogue of observed codes.
+    update:
+      x-error-catalog: ../errors/sinclair-broadcast-group-problem-types.yml
+      x-rfc9457: false
+      x-branch-on: code
+      x-observed-codes:
+        - rest_no_route
+        - rest_post_invalid_id
+        - rest_invalid_param
+        - rest_forbidden
+        - rest_user_cannot_view
+        - rest_cannot_view_plugins
+
+  - target: $
+    description: Cross-link the derived runtime-semantics artifacts so an agent can resolve conventions from the spec.
+    update:
+      x-artifacts:
+        conventions: ../conventions/sinclair-broadcast-group-conventions.yml
+        authentication: ../authentication/sinclair-broadcast-group-authentication.yml
+        errors: ../errors/sinclair-broadcast-group-problem-types.yml
+        lifecycle: ../lifecycle/sinclair-broadcast-group-lifecycle.yml
+        rate_limits: ../rate-limits/sinclair-broadcast-group-rate-limits.yml
+        data_model: ../data-model/sinclair-broadcast-group-data-model.yml
+        conformance: ../conformance/sinclair-broadcast-group-conformance.yml
+        source_of_record: ../openapi/_original/sinclair-broadcast-group-wp-json-index.json

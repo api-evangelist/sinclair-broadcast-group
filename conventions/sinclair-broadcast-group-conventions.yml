@@ -1,0 +1,162 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live response headers and bodies from https://sbgi.net/wp-json/ observed 2026-08-12,
+  plus the route index at openapi/_original/sinclair-broadcast-group-wp-json-index.json
+summary: >-
+  Cross-cutting runtime semantics for the Sinclair corporate content API. Sinclair
+  publishes no convention documentation of its own; everything below was read off the
+  wire or out of the route descriptors the API itself serves. Where a convention is
+  absent, that absence is recorded rather than filled in.
+auth_style:
+  scheme: none
+  description: Public content routes are anonymous. Privileged routes return HTTP 401.
+  see: authentication/sinclair-broadcast-group-authentication.yml
+idempotency:
+  supported: false
+  idempotency_key_header: null
+  description: >-
+    No idempotency key mechanism. The public surface is read-only (GET), so every
+    exposed operation is naturally idempotent, but Sinclair provides no
+    Idempotency-Key header, no request-replay window and no retention policy. Do not
+    read the read-only shape as an idempotency guarantee for the write routes the
+    index advertises but does not open.
+pagination:
+  style: page-number
+  params:
+    - name: page
+      default: 1
+      minimum: 1
+      description: 1-based page index.
+    - name: per_page
+      default: 10
+      minimum: 1
+      maximum: 100
+      description: Records per page. Exceeding 100 returns HTTP 400 rest_invalid_param / rest_out_of_bounds.
+    - name: offset
+      description: Alternative absolute offset, available on most collection routes.
+  response_headers:
+    - name: X-WP-Total
+      description: Total records in the collection.
+      observed_value_example: '1753'
+    - name: X-WP-TotalPages
+      description: Total pages available at the requested per_page.
+      observed_value_example: '877'
+    - name: Link
+      description: RFC 8288 link header carrying rel="next" and rel="prev".
+      observed_value_example: '<https://sbgi.net/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"'
+  cors_note: >-
+    Access-Control-Expose-Headers lists X-WP-Total, X-WP-TotalPages and Link, so the
+    pagination signals are readable from the browser — but only from the sbgi.net
+    origin, since Access-Control-Allow-Origin is pinned there.
+  applies_to:
+    - listPosts
+    - listPages
+    - listMedia
+    - listCategories
+    - listTags
+    - listComments
+    - search
+  not_paginated:
+    - getStationMap
+    - getRsnMap
+    - getWorldLocations
+    - getLatestPosts
+  not_paginated_note: >-
+    The first-party sbg/v1 routes accept no parameters at all and return the entire
+    collection in one response. getStationMap returned 136 KB and getWorldLocations
+    92 KB in a single unpaginated body on 2026-08-12. Budget for that.
+sorting_and_filtering:
+  order_params: [order, orderby]
+  date_filters: [after, before, modified_after, modified_before]
+  taxonomy_filters: [categories, categories_exclude, tags, tags_exclude]
+  id_filters: [include, exclude, slug]
+  search_param: search
+  note: Available on wp/v2 collection routes only; the sbg/v1 routes accept nothing.
+field_selection:
+  supported: true
+  param: _fields
+  description: >-
+    WordPress supports comma-separated response field trimming via _fields, and
+    embedding of linked resources via _embed. Neither is declared in the route args,
+    so neither appears in the derived OpenAPI, but both are WordPress core behaviour
+    on this version.
+  expansion_param: _embed
+  expansion_description: Inlines featured media, author and term objects under _embedded.
+context_parameter:
+  name: context
+  values: [view, embed, edit]
+  default: view
+  description: >-
+    Controls response verbosity. edit requires authentication and returns HTTP 401
+    anonymously. embed returns the trimmed representation used by _embed.
+versioning:
+  style: path-namespace
+  current:
+    - namespace: wp/v2
+      description: WordPress core content routes. Version is pinned in the path segment.
+    - namespace: sbg/v1
+      description: Sinclair's own namespace. Version 1 is the only version published.
+  namespaces_advertised: 14
+  namespaces_public: 3
+  note: >-
+    The index advertises 14 namespaces (frm-admin/v1, oembed/1.0, wpe/cache-plugin/v1,
+    wpe_sign_on_plugin/v1, redirection/v1, wordfence-login-security/v1, wordfence/v1,
+    yoast/v1, wpmudev-dashboard/v1, sbg/v1, wp/v2, wp-site-health/v1,
+    wp-block-editor/v1, wp-abilities/v1). Most are plugin-administrative and reject
+    anonymous callers. Only wp/v2, sbg/v1 and oembed/1.0 are usable by a third party.
+  see: lifecycle/sinclair-broadcast-group-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  branch_on: code
+  see: errors/sinclair-broadcast-group-problem-types.yml
+rate_limit_signaling:
+  headers_returned: false
+  see: rate-limits/sinclair-broadcast-group-rate-limits.yml
+request_tracing:
+  request_id_header: null
+  correlation_header: null
+  observed_infrastructure_headers:
+    - name: cf-ray
+      description: Cloudflare edge trace identifier. Present on every response, but it is an edge artifact, not a Sinclair application request id.
+    - name: x-powered-by
+      description: 'Observed value: WP Engine.'
+    - name: x-cache
+      description: 'WP Engine cache result: HIT or MISS.'
+  note: Sinclair returns no application-level request identifier. There is nothing stable to quote in a support ticket.
+caching:
+  cache_control: 'max-age=600, must-revalidate'
+  edge: Cloudflare in front of WP Engine
+  cf_cache_status_observed: DYNAMIC
+  x_cacheable_observed: SHORT
+  etag: false
+  conditional_requests: false
+  note: >-
+    Ten-minute freshness on API responses. No ETag and no Last-Modified on the JSON
+    responses observed, so conditional GET is not available; poll on the cache window
+    rather than attempting revalidation.
+content_negotiation:
+  request_media_types: []
+  response_media_type: application/json; charset=UTF-8
+  jsonp: false
+  envelope_param: _envelope
+  envelope_description: WordPress core supports ?_envelope=true to wrap body, status and headers in one JSON object for clients that cannot read status codes.
+robots:
+  api_indexable: false
+  header: 'x-robots-tag: noindex'
+  site_robots_txt: https://sbgi.net/robots.txt
+  crawl_delay: 10
+  disallow: none
+  note: >-
+    robots.txt disallows nothing and declares Crawl-delay 10. The API responses
+    themselves carry x-robots-tag noindex, which is an indexing directive, not an
+    access restriction.
+cross_links:
+  authentication: authentication/sinclair-broadcast-group-authentication.yml
+  errors: errors/sinclair-broadcast-group-problem-types.yml
+  lifecycle: lifecycle/sinclair-broadcast-group-lifecycle.yml
+  rate_limits: rate-limits/sinclair-broadcast-group-rate-limits.yml
+  data_model: data-model/sinclair-broadcast-group-data-model.yml
+docs: null
+docs_note: Sinclair publishes no API conventions documentation.

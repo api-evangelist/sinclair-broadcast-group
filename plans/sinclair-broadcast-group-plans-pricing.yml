@@ -1,0 +1,37 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://sbgi.net/ site walk and a web search for a Sinclair developer program,
+  pricing page or API plans, both of which returned nothing on 2026-08-12.
+plan_count: 0
+plans: []
+summary: >-
+  Sinclair publishes no API plans, no pricing and no signup. There is no developer
+  program to price. The corporate content API at sbgi.net/wp-json is free and
+  anonymous because it is site infrastructure that was never productised, not because
+  Sinclair offers a free tier — which means there is also no paid tier, no quota, no
+  commercial terms and no entitlement to keep using it.
+free_tier:
+  exists: false
+  note: >-
+    The surface is free to call today, but "free" here means unpriced and
+    uncommitted, not a published free plan.
+enterprise_contact_only: false
+signup_url: null
+pricing_url: null
+commercial_terms:
+  terms_of_use: https://sbgi.net/terms-conditions/
+  note: >-
+    Sinclair's site terms and conditions govern use of sbgi.net generally. They are
+    website terms, not API terms, and they are the only document a consumer of this
+    surface is bound by.
+evidence:
+  - url: https://sbgi.net/
+    status: 200
+    finding: no developer, API or pricing navigation anywhere on the corporate site
+  - url: https://sbgi.net/terms-conditions/
+    status: 200
+    finding: general website terms and conditions; no API-specific terms
+  - url: https://sbgi.net/wp-json/wp/v2/posts?per_page=1
+    status: 200
+    finding: content returned anonymously with no key, quota or entitlement check

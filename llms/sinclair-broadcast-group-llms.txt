@@ -1,0 +1,111 @@
+# Sinclair, Inc.
+
+> Sinclair, Inc. (Nasdaq: SBGI) is a diversified U.S. media company and one of the
+> largest local television broadcasters, operating roughly 185 stations across ~86
+> markets. Sinclair runs no developer program and publishes no API documentation.
+> It does, however, serve a live, public, unauthenticated REST API from its corporate
+> site — the WordPress REST API at https://sbgi.net/wp-json/ — including a first-party
+> `sbg/v1` namespace that publishes Sinclair's full television station footprint.
+
+Provenance: generated 2026-08-12 by the API Evangelist enrichment pipeline from
+apis.yml and the artifacts in this repository. Sinclair serves no llms.txt of its own
+(https://sbgi.net/llms.txt returns HTTP 404), so this file is ours, not theirs.
+
+## What is actually callable
+
+Base URL: https://sbgi.net/wp-json
+Authentication: none for content reads. No API key, no OAuth, no signup, no way for a
+third party to obtain credentials. Privileged routes return HTTP 401 and stay closed.
+Terms: general website terms at https://sbgi.net/terms-conditions/. There are no API
+terms, no SLA, no status page, no changelog, and no commitment that these routes exist
+tomorrow. Treat this as undocumented site infrastructure, not a supported product.
+
+## The routes worth knowing (sbg/v1 — Sinclair's own)
+
+- GET /sbg/v1/station-map — Every Sinclair television station: call letters, network
+  affiliation, DMA name and Nielsen rank, ownership status (O&O / JSA / LMA / MSA /
+  OSA), station website, logo and street address, with digital subchannels nested
+  underneath. 101 location records, 197 primary stations, 365 subchannels, 87 distinct
+  DMAs, 136 KB, unpaginated, no filters. This is the single most valuable thing on the
+  surface: nowhere else does Sinclair publish its footprint in machine-readable form.
+- GET /sbg/v1/rsn-map — 19 regional sports network territories with covered states,
+  teams carried and network website. STALE: still branded Bally Sports and linking to
+  ballysports.com, two rebrands behind the company's own reality (Main Street Sports
+  Group, then FanDuel Sports Network). Historical snapshot, not current carriage.
+- GET /sbg/v1/world-locations — scene records behind the interactive "Sinclair World"
+  corporate experience. 92 KB, unpaginated.
+- GET /sbg/v1/world-page — returns HTTP 200 with `{"success": false}` to anonymous
+  callers. Branch on the body, not the status code.
+- GET /sbg/v1/latest-posts — newsroom feed as a pre-rendered HTML fragment.
+
+## The routes worth knowing (wp/v2 — WordPress core)
+
+- GET /wp/v2/posts — Sinclair press releases and newsroom items. 1,753 records live.
+  27 query parameters including full-text search, date ranges, category and tag filters.
+- GET /wp/v2/posts/{id}, /wp/v2/pages, /wp/v2/pages/{id}, /wp/v2/media, /wp/v2/media/{id}
+- GET /wp/v2/categories, /wp/v2/categories/{id}, /wp/v2/tags (empty), /wp/v2/comments (empty)
+- GET /wp/v2/search — cross-content search over posts and pages
+- GET /wp/v2/types, /wp/v2/taxonomies, /wp/v2/statuses — self-describing metadata
+- GET /oembed/1.0/embed — valid oEmbed 1.0 for any Sinclair corporate URL
+
+Closed to anonymous callers (HTTP 401): /wp/v2/users, /wp/v2/settings, /wp/v2/plugins,
+and the wordfence, redirection, wpmudev-dashboard, wpe and frm-admin namespaces.
+
+## How to call it correctly
+
+- Pagination: `page` and `per_page` (max 100; 101+ returns HTTP 400 rest_invalid_param
+  with sub-code rest_out_of_bounds). Read `X-WP-Total`, `X-WP-TotalPages` and the
+  RFC 8288 `Link` header for `rel="next"`.
+- The sbg/v1 routes accept NO parameters and return everything in one response.
+- Field trimming with `_fields`, embedding with `_embed`, verbosity with `context`
+  (view | embed | edit; edit is 401 anonymously).
+- Errors are NOT RFC 9457. The envelope is `{"code", "message", "data": {"status"}}`
+  served as application/json. Branch on `code`, never on `message`.
+- No rate-limit headers exist. There is no runtime backoff signal. Responses carry
+  `cache-control: max-age=600` and robots.txt declares `Crawl-delay: 10` — pace at one
+  request per ten seconds and poll no faster than once per ten minutes.
+- CORS `Access-Control-Allow-Origin` is pinned to `https://sbgi.net`. Browser clients
+  on any other origin are blocked. Server-side clients are unaffected.
+- No ETag and no Last-Modified on the JSON responses, so conditional GET is unavailable.
+
+## Repository artifacts
+
+- OpenAPI 3.1 (derived, 20 operations, 143 parameters): openapi/sinclair-broadcast-group-content-openapi.yml
+- Source of record (verbatim route index): openapi/_original/sinclair-broadcast-group-wp-json-index.json
+- Overlay of our enhancements: overlays/sinclair-broadcast-group-content-overlay.yaml
+- Conventions: conventions/sinclair-broadcast-group-conventions.yml
+- Authentication: authentication/sinclair-broadcast-group-authentication.yml
+- Error catalog: errors/sinclair-broadcast-group-problem-types.yml
+- Data model: data-model/sinclair-broadcast-group-data-model.yml
+- Lifecycle: lifecycle/sinclair-broadcast-group-lifecycle.yml
+- Rate limits: rate-limits/sinclair-broadcast-group-rate-limits.yml
+- Conformance: conformance/sinclair-broadcast-group-conformance.yml
+- Plans and pricing (none published): plans/sinclair-broadcast-group-plans-pricing.yml
+- Packages (none published): packages/sinclair-broadcast-group-packages.yml
+- MCP candidate (NOT a Sinclair server): mcp/sinclair-broadcast-group-mcp.yml
+- Well-known probe: well-known/sinclair-broadcast-group-well-known.yml
+- Agent skills: skills/_index.yml
+
+## What Sinclair does not have
+
+No developer portal. No API reference. No OpenAPI of its own. No GraphQL. No MCP
+server. No A2A agent card (/.well-known/agent-card.json and /.well-known/agent.json
+return 404 on sbgi.net and on every subsidiary host probed). No AsyncAPI, no webhooks,
+no event stream. No SDKs on any package registry. No sandbox. No status page. No
+changelog. No pricing, no plans, no signup. No SOC 2 / ISO 27001 / PCI / HIPAA
+certifications published and no trust center.
+
+What it does have: a valid security.txt (Contact: mailto:ContactSincSec@sbgtv.com),
+TLS 1.3, HSTS, SPF, DMARC at p=reject, a full RSS press feed at https://sbgi.net/feed/,
+a Yoast sitemap index, and schema.org structured data inline in every API response.
+
+## Company links
+
+- Corporate site: https://sbgi.net
+- Press releases: https://sbgi.net/investor-relations/press-releases/
+- RSS feed: https://sbgi.net/feed/
+- Investor relations: https://sbgi.net/investor-relations/
+- Contact: https://sbgi.net/contact-us/
+- Privacy policy: https://sbgi.net/privacy-policy/
+- Terms: https://sbgi.net/terms-conditions/
+- GitHub: https://github.com/SinclairBroadcastGroup (1 repo, unrelated to any API)

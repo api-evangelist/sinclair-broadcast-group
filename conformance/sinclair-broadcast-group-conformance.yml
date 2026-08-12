@@ -1,0 +1,126 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/sinclair-broadcast-group-content-openapi.yml, live response headers from
+  https://sbgi.net/wp-json/ observed 2026-08-12, and
+  security/sinclair-broadcast-group-domain-security.yml
+summary: >-
+  Sinclair claims conformance to nothing. The entries below are our own assessment of
+  which cross-cutting standards the surface actually satisfies, each with the evidence
+  that decided it. The pattern is characteristic of WordPress: the HTTP-layer standards
+  it inherits from the platform are met, and every standard that requires a deliberate
+  API-design decision is not.
+standards:
+  - id: openapi
+    conforms: true
+    version: 3.1.0
+    self_asserted: false
+    evidence: >-
+      No spec is published by Sinclair. openapi/sinclair-broadcast-group-content-openapi.yml
+      was derived by API Evangelist from the route descriptors WordPress serves at
+      https://sbgi.net/wp-json/ and validates as OpenAPI 3.1.0 with 20 operations and
+      143 parameters.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors are served as application/json using the WordPress {code, message,
+      data.status} envelope, not application/problem+json. See
+      errors/sinclair-broadcast-group-problem-types.yml.
+  - id: rfc8288
+    conforms: true
+    evidence: >-
+      Collection responses return a standards-compliant Link header carrying rel="next"
+      and rel="prev". Observed on
+      https://sbgi.net/wp-json/wp/v2/posts?per_page=2 (HTTP 200).
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Page-number pagination via page and per_page, with X-WP-Total and X-WP-TotalPages
+      response headers, on all wp/v2 collection routes. The first-party sbg/v1 routes
+      are not paginated at all.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header, no replay window, no documented semantics. The public
+      surface is GET-only, which is not the same thing as an idempotency guarantee.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No securityScheme declared, no token endpoint, and
+      https://sbgi.net/.well-known/oauth-authorization-server returns HTTP 404.
+  - id: oidc
+    conforms: false
+    evidence: 'https://sbgi.net/.well-known/openid-configuration returns HTTP 404.'
+  - id: rfc9116
+    conforms: true
+    name: security.txt
+    evidence: >-
+      https://sbgi.net/.well-known/security.txt returns HTTP 200 with Contact and
+      Expires directives. Minimal but valid — it omits the optional Policy,
+      Encryption, Preferred-Languages and Canonical fields.
+  - id: rfc8594
+    conforms: false
+    name: Sunset header
+    evidence: No Sunset or Deprecation headers on any response. See lifecycle/.
+  - id: cors
+    conforms: partial
+    evidence: >-
+      CORS headers are present and correct, but Access-Control-Allow-Origin is pinned
+      to https://sbgi.net, so no third-party browser origin can read the API.
+      Access-Control-Expose-Headers correctly exposes X-WP-Total, X-WP-TotalPages and Link.
+  - id: hsts
+    conforms: true
+    evidence: 'strict-transport-security: max-age=15768000; includeSubDomains observed on live responses.'
+  - id: tls13
+    conforms: true
+    evidence: TLSv1.3 negotiated; certificate valid to 2026-09-14.
+  - id: dmarc
+    conforms: true
+    evidence: DMARC record present with policy p=reject on sbgi.net.
+  - id: spf
+    conforms: true
+    evidence: SPF record present on sbgi.net.
+  - id: dnssec
+    conforms: false
+    evidence: No DNSSEC on sbgi.net.
+  - id: caa
+    conforms: false
+    evidence: No CAA records on sbgi.net.
+  - id: oembed
+    conforms: true
+    version: '1.0'
+    evidence: >-
+      https://sbgi.net/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fsbgi.net%2F returns
+      HTTP 200 with a valid oEmbed 1.0 response including version, provider_name
+      "Sinclair, Inc" and provider_url.
+  - id: rss
+    conforms: true
+    evidence: 'https://sbgi.net/feed/ returns HTTP 200 with a full RSS 2.0 press release feed.'
+  - id: sitemap
+    conforms: true
+    evidence: 'https://sbgi.net/sitemap_index.xml returns HTTP 200 (Yoast sitemap index).'
+  - id: schema_org
+    conforms: true
+    evidence: >-
+      Every wp/v2 post carries a yoast_head_json block with Open Graph and schema.org
+      structured data inline in the API response.
+  - id: asyncapi
+    conforms: false
+    evidence: No event, streaming or webhook surface exists. See the asyncapi note below.
+  - id: mcp
+    conforms: false
+    evidence: No MCP server published. mcp/sinclair-broadcast-group-mcp.yml is a candidate derivation, not a Sinclair product.
+  - id: a2a
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json return HTTP 404 on
+      sbgi.net and on every subsidiary host probed.
+regulatory:
+  note: >-
+    Sinclair is an FCC-licensed broadcaster and a Nasdaq-listed issuer (SBGI), so it
+    sits under FCC and SEC regimes — but neither regime governs this API surface, and
+    Sinclair publishes no compliance certifications (SOC 2, ISO 27001, PCI, HIPAA,
+    FedRAMP) and operates no trust center. No Compliance pointer is emitted.
+  certifications_published: []
+  trust_center: false
+compliance_pointer_emitted: false

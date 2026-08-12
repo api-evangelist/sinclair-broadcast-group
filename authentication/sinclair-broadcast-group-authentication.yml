@@ -1,0 +1,79 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live unauthenticated requests against https://sbgi.net/wp-json/ on 2026-08-12,
+  plus the route index at openapi/_original/sinclair-broadcast-group-wp-json-index.json
+summary: >-
+  Sinclair declares no security scheme. The WordPress REST API index at
+  https://sbgi.net/wp-json/ reports "authentication": [] — meaning no
+  authentication provider is registered for third-party use — and the public
+  content routes answer anonymously with HTTP 200. Privileged routes are still
+  routed and still advertised in the index, but reject anonymous callers with
+  HTTP 401. There is no API key, no OAuth, no token endpoint, no developer
+  signup and no documented way for an outside developer to obtain credentials.
+apis:
+  - name: Sinclair Corporate Content API
+    baseURL: https://sbgi.net/wp-json
+    public_read: true
+    credentials_obtainable_by_third_parties: false
+    schemes: []
+    schemes_note: >-
+      The derived OpenAPI carries no securitySchemes because the live route
+      descriptors declare none. This is an accurate absence, not a gap in the
+      derivation.
+    observed:
+      - surface: public content read
+        auth_required: false
+        evidence:
+          - url: https://sbgi.net/wp-json/wp/v2/posts?per_page=1
+            status: 200
+          - url: https://sbgi.net/wp-json/sbg/v1/station-map
+            status: 200
+          - url: https://sbgi.net/wp-json/sbg/v1/rsn-map
+            status: 200
+          - url: https://sbgi.net/wp-json/wp/v2/search?search=nextgen
+            status: 200
+      - surface: privileged / administrative
+        auth_required: true
+        mechanism: >-
+          WordPress core session auth (login cookie plus an X-WP-Nonce header) or
+          Application Passwords over HTTP Basic. Neither is offered to third
+          parties by Sinclair; both are editorial-staff mechanisms.
+        error_code_observed: rest_forbidden / rest_user_cannot_view / rest_cannot_view_plugins
+        evidence:
+          - url: https://sbgi.net/wp-json/wp/v2/users?per_page=1
+            status: 401
+          - url: https://sbgi.net/wp-json/wp/v2/settings
+            status: 401
+          - url: https://sbgi.net/wp-json/wp/v2/plugins
+            status: 401
+    transport_security:
+      https_only: true
+      hsts: true
+      hsts_max_age: 15768000
+      tls_version: TLSv1.3
+    browser_access:
+      cors_allow_origin: https://sbgi.net
+      third_party_browser_calls: blocked
+      note: >-
+        Access-Control-Allow-Origin is pinned to https://sbgi.net, so a browser on
+        any other origin cannot read this API. Server-side callers are unaffected.
+        This is the practical access constraint on the surface, not authentication.
+      evidence:
+        - url: https://sbgi.net/wp-json/wp/v2/posts?per_page=2
+          header: 'access-control-allow-origin: https://sbgi.net'
+          status: 200
+    accepted_headers:
+      - Authorization
+      - X-WP-Nonce
+      - Content-Disposition
+      - Content-MD5
+      - Content-Type
+    oauth2: false
+    openid_connect: false
+    api_keys: false
+    mutual_tls: false
+docs: null
+docs_note: >-
+  Sinclair publishes no authentication documentation. The mechanisms above are the
+  WordPress core defaults observed on this host, not a Sinclair-published contract.

@@ -1,0 +1,81 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live probes of https://sbgi.net/ and https://sbgi.net/wp-json/ on 2026-08-12, plus a
+  web search for a Sinclair developer program, status page or deprecation policy that
+  returned nothing.
+summary: >-
+  Sinclair operates this API surface as site infrastructure, not as a product. There is
+  no versioning policy, no deprecation policy, no Sunset or Deprecation headers, no SLA,
+  no status page and no changelog. Consumers get whatever the corporate site's WordPress
+  install happens to expose, and a plugin change or a theme rebuild can remove the
+  first-party sbg/v1 routes without notice or announcement.
+versioning:
+  scheme: path-namespace
+  documented: false
+  current_versions:
+    - namespace: wp/v2
+      status: current
+      note: Version pinned in the path. WordPress core has held wp/v2 stable since 2016.
+    - namespace: sbg/v1
+      status: current
+      note: Sinclair's own namespace. v1 is the only version ever published.
+    - namespace: oembed/1.0
+      status: current
+  breaking_change_policy: null
+  announcement_channel: null
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No operation in the derived spec is marked deprecated, and no route in the live
+    index carries a deprecation flag. The absence of any policy is the finding: there
+    is no commitment that these routes will exist tomorrow.
+  evidence:
+    - url: https://sbgi.net/wp-json/wp/v2/posts?per_page=2
+      status: 200
+      finding: no Sunset, Deprecation or Link rel="deprecation" headers on the response
+stability_signals:
+  - signal: rsn-map payload still carries Bally Sports branding
+    detail: >-
+      getRsnMap returns titles like "Bally Sports Wisconsin" and links to ballysports.com,
+      a brand Sinclair's own investor materials describe as having been superseded — the
+      RSNs moved to Main Street Sports Group and then to FanDuel Sports Network. The route
+      is live and answers 200, but the data behind it has not been maintained through two
+      rebrands. Treat it as a historical snapshot, not current carriage.
+    observed_at: '2026-08-12'
+  - signal: world-page returns success:false to anonymous callers
+    detail: The route is published in the index and answers 200 with an empty result, which reads as a partially wired endpoint rather than a stable contract.
+    observed_at: '2026-08-12'
+sla:
+  published: false
+  uptime_commitment: null
+  support_channel: https://sbgi.net/contact-us/
+  support_note: A general corporate contact form. There is no developer support channel.
+status_page:
+  published: false
+  url: null
+  note: >-
+    Searched for a Sinclair status page (status.sbgi.net, a statuspage.io or
+    instatus-hosted page, and a status link on the corporate site) and found none.
+    Sinclair publishes no availability signal for this surface.
+changelog:
+  published: false
+  url: null
+  note: >-
+    No API changelog exists. https://sbgi.net/investor-relations/press-releases/ is a
+    corporate press release feed, not a technical changelog, and never mentions the API.
+platform_currency:
+  origin: WP Engine
+  edge: Cloudflare
+  security_plugins_observed: [wordfence, wordfence-login-security]
+  seo_plugin_observed: 'Yoast SEO v28.2'
+  note: >-
+    The stack is actively maintained as a website — current plugin versions, current
+    WordPress core, TLS 1.3, HSTS, DMARC at p=reject. The maintenance is real; it is
+    simply aimed at the website, not at API consumers.
+docs: null

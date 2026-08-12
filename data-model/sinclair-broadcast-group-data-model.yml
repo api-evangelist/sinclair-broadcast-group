@@ -1,0 +1,142 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/sinclair-broadcast-group-content-openapi.yml plus live response bodies
+  fetched from https://sbgi.net/wp-json/ on 2026-08-12. Field names and nesting were
+  read out of real payloads; nothing here is inferred from documentation, because
+  Sinclair publishes none.
+summary: >-
+  Two disjoint entity graphs share one host. The wp/v2 graph is stock WordPress
+  content (posts, pages, media, terms) linked through HAL-style _links. The sbg/v1
+  graph is Sinclair's own broadcast footprint — markets containing stations containing
+  substations — and it is the part of this API that carries information available
+  nowhere else in machine-readable form.
+identifiers:
+  style: integer
+  prefixed_ids: false
+  note: >-
+    wp/v2 resources use bare auto-increment integers with no type prefix, so an id is
+    only meaningful alongside its collection. sbg/v1 records carry no id at all — the
+    natural key for a station is its callLetter.
+entities:
+  - name: Market
+    source_operation: getStationMap
+    description: >-
+      A geographic point on Sinclair's station map, keyed by street address, holding
+      every Sinclair station transmitting from that address. 101 records live.
+    key: address
+    fields:
+      - {name: location, type: 'array[number]', description: '[latitude, longitude] pair.'}
+      - {name: address, type: string, description: Street address of the facility.}
+      - {name: stations, type: 'array[Station]', description: Stations at this location.}
+  - name: Station
+    source_operation: getStationMap
+    description: >-
+      A Sinclair television station. 197 primary station records live across 87
+      distinct DMAs, with an observed status breakdown of 160 O&O, 15 MSA, 14 JSA,
+      5 LMA, 2 OSA and 1 services arrangement.
+    key: callLetter
+    fields:
+      - {name: callLetter, type: string, description: 'FCC call sign, e.g. KAAS. Unique. The natural key.'}
+      - {name: station, type: string, description: Parent call sign; equals callLetter for a primary channel.}
+      - {name: affiliation, type: string, description: 'Network affiliation. Observed values include FOX, ABC, CBS, NBC, CW, MyTV, Univision, Independent, and Sinclair''s own multicast networks Roar, Comet, Charge and The Nest.'}
+      - {name: dma, type: string, description: 'Nielsen Designated Market Area name, e.g. "Wichita - Hutchinson, KS".'}
+      - {name: dmaRank, type: string, description: Nielsen market rank, carried as a string.}
+      - {name: stationStatus, type: string, description: 'Ownership or operating arrangement: O&O, JSA, LMA, MSA, OSA, Services Arrangement.'}
+      - {name: stationLogo, type: string, description: Absolute URL to the station logo in the Sinclair media library. Frequently empty.}
+      - {name: address, type: string, description: Facility address; duplicated from the parent Market.}
+      - {name: stationURL, type: string, description: Public consumer website for the station.}
+      - {name: newsletterURL, type: string, description: Station newsletter signup URL. Frequently empty.}
+      - {name: subStations, type: 'array[SubStation]', description: Digital subchannels carried on this station's spectrum.}
+  - name: SubStation
+    source_operation: getStationMap
+    description: >-
+      A digital subchannel on a primary station's spectrum — how Sinclair's multicast
+      networks (Comet, Charge!, Roar, The Nest) and secondary affiliations are carried.
+      365 records live.
+    key: callLetter
+    fields:
+      - {name: callLetter, type: string, description: 'Subchannel call sign, e.g. KAAS-2.'}
+      - {name: station, type: string, description: Parent station call sign. The join key back to Station.}
+      - {name: affiliation, type: string}
+      - {name: dma, type: string}
+      - {name: dmaRank, type: string}
+      - {name: stationStatus, type: string}
+      - {name: stationLogo, type: string}
+      - {name: stationURL, type: string}
+  - name: RegionalSportsNetwork
+    source_operation: getRsnMap
+    description: >-
+      A regional sports network territory. 19 records live. Retained from Sinclair's
+      Diamond Sports era; the payload still carries Bally Sports branding and
+      ballysports.com links, which is itself a currency signal on this route.
+    key: title
+    fields:
+      - {name: title, type: string}
+      - {name: markerLocation, type: 'array[number]', description: '[latitude, longitude] pair.'}
+      - {name: logo, type: string, description: Absolute URL into the Sinclair media library.}
+      - {name: states, type: 'array[string]', description: Two-letter state codes in the territory.}
+      - {name: teams, type: string, description: HTML fragment listing the teams carried, not a structured list.}
+      - {name: website, type: string}
+      - {name: newsletterUrl, type: string}
+  - name: WorldLocation
+    source_operation: getWorldLocations
+    description: Scene records (video fly-in/fly-out, overlays, audio cues) powering the interactive Sinclair World corporate experience.
+    key: null
+  - name: Post
+    source_operation: listPosts
+    description: A Sinclair press release or newsroom item. 1,753 records live as of 2026-08-12.
+    key: id
+    fields:
+      - {name: id, type: integer}
+      - {name: date, type: 'string(date-time)'}
+      - {name: modified, type: 'string(date-time)'}
+      - {name: slug, type: string}
+      - {name: status, type: string}
+      - {name: link, type: string}
+      - {name: title, type: object, description: '{rendered: string}'}
+      - {name: content, type: object, description: '{rendered: string, protected: bool}'}
+      - {name: excerpt, type: object}
+      - {name: author, type: integer, description: Author id. The users collection is 401 anonymously, so this id cannot be resolved to a person.}
+      - {name: featured_media, type: integer}
+      - {name: categories, type: 'array[integer]'}
+      - {name: tags, type: 'array[integer]'}
+      - {name: acf, type: object, description: Advanced Custom Fields payload.}
+      - {name: yoast_head_json, type: object, description: Structured SEO metadata including Open Graph and schema.org blocks.}
+      - {name: _links, type: object, description: HAL-style link relations — self, collection, about, author, replies, version-history, wp:attachment, wp:term.}
+  - name: Page
+    source_operation: listPages
+    description: A corporate site page. Same shape as Post plus parent and menu_order.
+    key: id
+  - name: Media
+    source_operation: listMedia
+    description: A media library asset — station logos, press images, video.
+    key: id
+  - name: Category
+    source_operation: listCategories
+    description: Press release category. Observed categories include Archive (893 posts).
+    key: id
+  - name: Tag
+    source_operation: listTags
+    description: Post tag. The collection is live but empty on this site.
+    key: id
+relationships:
+  - {from: Market, to: Station, type: has_many, via: stations, confidence: high}
+  - {from: Station, to: SubStation, type: has_many, via: subStations, confidence: high}
+  - {from: SubStation, to: Station, type: belongs_to, via: station, confidence: high}
+  - {from: Station, to: Market, type: belongs_to, via: address, confidence: medium, note: Joined on the duplicated address string; there is no market id.}
+  - {from: Post, to: Category, type: has_many, via: categories, confidence: high}
+  - {from: Post, to: Tag, type: has_many, via: tags, confidence: high}
+  - {from: Post, to: Media, type: has_one, via: featured_media, confidence: high}
+  - {from: Post, to: User, type: belongs_to, via: author, confidence: high, note: Unresolvable anonymously — wp/v2/users returns 401.}
+  - {from: Page, to: Page, type: belongs_to, via: parent, confidence: high}
+  - {from: Page, to: Media, type: has_one, via: featured_media, confidence: high}
+  - {from: Media, to: Post, type: belongs_to, via: post, confidence: medium}
+  - {from: Category, to: Category, type: belongs_to, via: parent, confidence: high}
+graph_notes:
+  - The sbg/v1 and wp/v2 graphs do not join. A Station carries no post id and a Post carries no call sign; the only bridge is the media library, since stationLogo and RSN logo URLs point into wp-content uploads on the same host.
+  - There is no station-to-network entity. Affiliation is a free-text string on Station, so network rollups require normalising strings.
+  - dmaRank is a string, not an integer. Sort numerically only after casting.
+subway: null
+docs: null
+docs_note: Sinclair publishes no object reference. Every entity, field and relationship above was read from a live response body.

@@ -1,0 +1,86 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  npm registry search, PyPI, and the GitHub organizations github.com/SinclairBroadcastGroup
+  and github.com/SinclairDigital, all queried 2026-08-12.
+package_count: 0
+official_package_count: 0
+packages: []
+summary: >-
+  Sinclair publishes no client libraries. There is no first-party SDK on npm, PyPI,
+  Maven Central, NuGet, RubyGems, crates.io, Packagist or pkg.go.dev for any Sinclair
+  API, which is consistent with there being no developer program to build one for.
+  Sinclair's two GitHub organizations contain one non-fork repository between them, a
+  2017 typeahead component that has nothing to do with any Sinclair API.
+registries_checked:
+  - {registry: npm, query: 'sinclair broadcast / sbgi / sinclair broadcast group', result: no first-party package}
+  - {registry: pypi, query: 'sbgi, sinclair', result: 404 on both}
+  - {registry: github, query: 'SinclairBroadcastGroup, SinclairDigital orgs', result: 11 repositories, 10 of them forks}
+misattribution_guard:
+  - package: '@sinclair/typebox'
+    registry: npm
+    owner: sinclairzx81 (Haydn Sinclair)
+    repository: https://github.com/sinclairzx81/typebox
+    official: false
+    note: >-
+      The npm scope @sinclair belongs to an individual developer named Sinclair and has
+      no connection to Sinclair, Inc. or Sinclair Broadcast Group. It is the top hit on
+      every registry search for "sinclair" and must never be credited to this company.
+github_organizations:
+  - org: SinclairBroadcastGroup
+    url: https://github.com/SinclairBroadcastGroup
+    public_repos: 1
+    website: sbgtv.com
+    first_party_repos: 0
+    note: >-
+      The single public repository, react-typeahead, is a fork-style copy of a generic
+      React component last pushed 2017-09-12. No Sinclair API code, no SDK.
+  - org: SinclairDigital
+    url: https://github.com/SinclairDigital
+    public_repos: 10
+    website: sinclairconnected.com
+    first_party_repos: 0
+    forks: 10
+    note: >-
+      Every one of the ten repositories is a fork (live-stream-on-aws,
+      terraform-provider-aws, appstoreconnect, swaggerize-express, exif-js,
+      react-sortable-hoc, eslint-plugin-ramda, hard-source-webpack-plugin, athom_web,
+      sinclair-feed-specifications). Latest push across the org is 2021-11-11. The
+      org's stated website sinclairconnected.com did not resolve on 2026-08-12, so
+      this org's relationship to Sinclair, Inc. is not independently confirmed — only
+      the feed-specifications repository names the company in its own content.
+related_specifications:
+  - name: Sinclair External Ingest Specification
+    url: https://github.com/SinclairDigital/sinclair-feed-specifications
+    upstream_url: https://github.com/clarketm/sinclair-feed-specifications
+    fork_source: MikeSRT/wurl-feed-specifications
+    registry: none
+    version: null
+    published: '2021-11-11'
+    official: false
+    machine_readable: false
+    ownership_note: >-
+      Judged by what it says about itself, not where it was fetched: the README opens
+      "This is the documentation for providing linear feeds and VOD to the Sinclair
+      Broadcast Group Digital Platform", naming this company explicitly. It is
+      recorded here rather than as an API entry because it is a partner content-ingest
+      contract, not a callable API, and because it lives on a forked repository last
+      touched 2021-11-11 with no indication Sinclair still operates the program.
+    contents:
+      - sinclair-linear-feed-spec.md
+      - sinclair-vod-feed-spec.md
+      - sinclair-hls-technical-spec.md
+      - 'rovi-docs-and-xml/RoviExternalListings.xsd (Rovi''s schema, not Sinclair''s)'
+    description: >-
+      Requirements for a content partner to deliver linear FAST channels and VOD to
+      Sinclair's digital platform: an HLS stream with SCTE-35 ad markers and embedded
+      608 closed captions, a program schedule file, and a publicly-reachable JSON VOD
+      structure feed. The closest thing Sinclair has ever published to an integration
+      contract.
+    currency_signal: >-
+      Last push 2021-11-11, five years stale, on a fork of a fork. Do not treat as a
+      live program without confirming with Sinclair directly.
+sdks_pointer_emitted: false
+sdks_pointer_note: >-
+  No type SDKs pointer is wired in apis.yml because there is no official SDK. Emitting
+  one would credit Sinclair with a client library it does not ship.

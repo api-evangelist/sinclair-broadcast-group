@@ -1,0 +1,114 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  Live error responses observed against https://sbgi.net/wp-json/ on 2026-08-12,
+  cross-checked against the 4xx responses in
+  openapi/sinclair-broadcast-group-content-openapi.yml
+format: wordpress-rest-error
+rfc9457: false
+rfc9457_note: >-
+  Sinclair does NOT return application/problem+json. Errors use the WordPress REST
+  API envelope, served as application/json with the HTTP status duplicated inside
+  the body at data.status.
+envelope:
+  media_type: application/json
+  shape: |
+    {
+      "code":    "rest_forbidden",
+      "message": "Sorry, you are not allowed to do that.",
+      "data":    { "status": 401 }
+    }
+  fields:
+    - name: code
+      type: string
+      description: Machine-readable error code. Stable across WordPress releases; the correct field to branch on.
+    - name: message
+      type: string
+      description: Human-readable English message. Not stable — do not match on it.
+    - name: data.status
+      type: integer
+      description: HTTP status code, repeated inside the body.
+    - name: data.params
+      type: object
+      description: Present on rest_invalid_param; maps each rejected query parameter to the reason it failed.
+    - name: data.details
+      type: object
+      description: >-
+        Present on rest_invalid_param; per-parameter object carrying a machine-readable
+        sub-code (e.g. rest_out_of_bounds) alongside the human message.
+problem_types:
+  - code: rest_no_route
+    http_status: 404
+    title: No route matched the requested URL and method
+    remediation: >-
+      Check the path against the live route index at https://sbgi.net/wp-json/.
+      Note that a route can exist for GET and not for the method you sent.
+    observed: true
+    evidence:
+      - url: https://sbgi.net/wp-json/wp/v2/nope
+        status: 404
+        body: '{"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}'
+  - code: rest_post_invalid_id
+    http_status: 404
+    title: Invalid post ID
+    remediation: Resolve the id from listPosts before calling getPost.
+    observed: true
+    evidence:
+      - url: https://sbgi.net/wp-json/wp/v2/posts/1
+        status: 404
+        body: '{"code":"rest_post_invalid_id","message":"Invalid post ID.","data":{"status":404}}'
+  - code: rest_invalid_param
+    http_status: 400
+    title: One or more query parameters failed validation
+    remediation: >-
+      Read data.params for the per-parameter reason and data.details[param].code for a
+      machine-readable sub-code such as rest_out_of_bounds. The derived OpenAPI carries
+      the real enum, minimum and maximum constraints for all 143 query parameters on
+      this surface — validate against those before calling.
+    observed: true
+    sub_codes:
+      - rest_out_of_bounds
+    evidence:
+      - url: https://sbgi.net/wp-json/wp/v2/posts?per_page=999
+        status: 400
+        body: 'per_page must be between 1 (inclusive) and 100 (inclusive)'
+  - code: rest_forbidden
+    http_status: 401
+    title: Caller is not permitted to perform this action
+    remediation: >-
+      This route is editorial-staff-only. There is no third-party credential Sinclair
+      issues that would change the outcome. Stay on the public read surface.
+    observed: true
+    evidence:
+      - url: https://sbgi.net/wp-json/wp/v2/settings
+        status: 401
+  - code: rest_user_cannot_view
+    http_status: 401
+    title: Not allowed to list users
+    remediation: Author identity is exposed only as an opaque author id on posts. There is no public user directory.
+    observed: true
+    evidence:
+      - url: https://sbgi.net/wp-json/wp/v2/users?per_page=1
+        status: 401
+  - code: rest_cannot_view_plugins
+    http_status: 401
+    title: Not allowed to manage plugins
+    remediation: Administrative namespace. Not part of the public read surface.
+    observed: true
+    evidence:
+      - url: https://sbgi.net/wp-json/wp/v2/plugins
+        status: 401
+non_error_failure_modes:
+  - route: /sbg/v1/world-page
+    http_status: 200
+    body: '{"success": false}'
+    description: >-
+      Returns HTTP 200 with a success:false body rather than a 4xx when called without
+      the page selector the corporate front end supplies. A client that branches on
+      status code alone will read this as a success. Branch on the success field.
+    observed: true
+    evidence:
+      - url: https://sbgi.net/wp-json/sbg/v1/world-page
+        status: 200
+docs: null
+docs_note: Sinclair publishes no error reference. Every entry above was observed live or read from the route handler metadata.

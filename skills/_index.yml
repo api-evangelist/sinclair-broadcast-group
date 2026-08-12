@@ -1,0 +1,39 @@
+generated: '2026-08-12'
+method: generated
+source: >-
+  openapi/sinclair-broadcast-group-content-openapi.yml plus the conventions, errors and
+  rate-limits artifacts in this repository. Every operationId referenced below was
+  grepped out of the derived spec; none was invented.
+searched_for_provider_published_skills:
+  found: false
+  checked:
+    - {url: 'https://sbgi.net/llms.txt', status: 404}
+    - {url: 'https://sbgi.net/AGENTS.md', status: 404}
+    - {what: 'GitHub orgs SinclairBroadcastGroup, SinclairDigital', result: no skills or AGENTS.md}
+note: >-
+  Sinclair publishes no agent skills. These two are ours, generated over the derived
+  contract. They are deliberately scoped to the two flows the surface actually supports
+  well; there is no write path, no transactional flow and no event surface to package.
+skills:
+  - name: sinclair-station-footprint
+    file: skills/sinclair-station-footprint.md
+    description: >-
+      Retrieve and correctly analyze Sinclair's complete television station footprint —
+      call letters, affiliation, DMA and Nielsen rank, ownership arrangement and digital
+      subchannels — including the flattening, type-casting and staleness traps.
+    api: Sinclair Corporate Content API
+    operations: [getStationMap, getRsnMap]
+    read_only: true
+  - name: sinclair-press-release-monitoring
+    file: skills/sinclair-press-release-monitoring.md
+    description: >-
+      Search, page and change-detect Sinclair's 1,753 press releases, with the header-driven
+      pagination, payload trimming and modified-timestamp polling the surface requires.
+    api: Sinclair Corporate Content API
+    operations: [listPosts, getPost, search, listCategories, getLatestPosts]
+    read_only: true
+not_packaged:
+  - reason: no write operations on the public surface
+  - reason: no webhook or event surface to subscribe to
+  - reason: no authentication flow to walk a caller through
+  - reason: /sbg/v1/world-locations and /sbg/v1/world-page serve a corporate marketing experience with no third-party use case
