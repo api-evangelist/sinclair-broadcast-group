@@ -5,56 +5,148 @@ source: openapi/sinclair-broadcast-group-content-openapi.yml
 searched:
   official_server_found: false
   checked:
-    - {what: Sinclair docs and corporate site, result: no MCP mention, url: 'https://sbgi.net/', status: 200}
-    - {what: '/.well-known/oauth-protected-resource on sbgi.net', result: 404, url: 'https://sbgi.net/.well-known/oauth-protected-resource', status: 404}
-    - {what: npm registry for a Sinclair MCP server, result: none}
-    - {what: 'GitHub orgs SinclairBroadcastGroup, SinclairDigital', result: no MCP repository}
-summary: >-
-  Sinclair operates NO MCP server. The tools below are a CANDIDATE derivation — one
-  tool per operation in the derived OpenAPI — showing what an MCP server over this
-  surface would expose if anyone built one. Nothing here is published by Sinclair and
-  no Sinclair endpoint answers MCP JSON-RPC.
+  - what: Sinclair docs and corporate site
+    result: no MCP mention
+    url: https://sbgi.net/
+    status: 200
+  - what: /.well-known/oauth-protected-resource on sbgi.net
+    result: 404
+    url: https://sbgi.net/.well-known/oauth-protected-resource
+    status: 404
+  - what: npm registry for a Sinclair MCP server
+    result: none
+  - what: GitHub orgs SinclairBroadcastGroup, SinclairDigital
+    result: no MCP repository
+summary: Sinclair operates NO MCP server. The tools below are a CANDIDATE derivation — one tool per operation
+  in the derived OpenAPI — showing what an MCP server over this surface would expose if anyone built one.
+  Nothing here is published by Sinclair and no Sinclair endpoint answers MCP JSON-RPC.
 server:
   name: null
   transport: null
   url: null
   published: false
 tools:
-  - {name: get_station_map, rest: getStationMap, category: stations, description: 'Return every Sinclair television station with call letters, network affiliation, DMA name and rank, ownership status, station website and street address. 197 primary stations across 87 DMAs.', read_only: true}
-  - {name: get_rsn_map, rest: getRsnMap, category: stations, description: 'Return the 19 regional sports network territories with covered states, teams carried and network website.', read_only: true}
-  - {name: get_world_locations, rest: getWorldLocations, category: corporate, description: Return the scene records behind the interactive Sinclair World corporate experience., read_only: true}
-  - {name: get_world_page, rest: getWorldPage, category: corporate, description: 'Return a single Sinclair World page payload. Returns {"success": false} without the selector the corporate front end supplies.', read_only: true}
-  - {name: get_latest_posts, rest: getLatestPosts, category: press, description: Return the newsroom feed as a pre-rendered HTML list., read_only: true}
-  - {name: list_press_releases, rest: listPosts, category: press, description: 'Search and page Sinclair press releases with date, category, tag and full-text filters. 1,753 records.', read_only: true}
-  - {name: get_press_release, rest: getPost, category: press, description: Retrieve one press release by id., read_only: true}
-  - {name: list_pages, rest: listPages, category: corporate, description: List corporate site pages., read_only: true}
-  - {name: get_page, rest: getPage, category: corporate, description: Retrieve one corporate page by id., read_only: true}
-  - {name: list_media, rest: listMedia, category: media, description: List media library assets including station logos and press imagery., read_only: true}
-  - {name: get_media, rest: getMedia, category: media, description: Retrieve one media item by id., read_only: true}
-  - {name: list_categories, rest: listCategories, category: taxonomy, description: List press release categories., read_only: true}
-  - {name: get_category, rest: getCategory, category: taxonomy, description: Retrieve one category by id., read_only: true}
-  - {name: list_tags, rest: listTags, category: taxonomy, description: List post tags. Empty on this site., read_only: true}
-  - {name: list_comments, rest: listComments, category: press, description: List comments. Empty on this site., read_only: true}
-  - {name: search_site, rest: search, category: search, description: Search across Sinclair press releases and corporate pages., read_only: true}
-  - {name: list_types, rest: listTypes, category: schema, description: List content types exposed by the API., read_only: true}
-  - {name: list_taxonomies, rest: listTaxonomies, category: schema, description: List taxonomies exposed by the API., read_only: true}
-  - {name: list_statuses, rest: listStatuses, category: schema, description: List publication statuses exposed by the API., read_only: true}
-  - {name: get_oembed, rest: getOEmbed, category: embed, description: Return the oEmbed 1.0 representation of a Sinclair corporate URL., read_only: true}
+- name: get_station_map
+  rest: getStationMap
+  category: stations
+  description: Return every Sinclair television station with call letters, network affiliation, DMA name
+    and rank, ownership status, station website and street address. 197 primary stations across 87 DMAs.
+  read_only: true
+- name: get_rsn_map
+  rest: getRsnMap
+  category: stations
+  description: Return the 19 regional sports network territories with covered states, teams carried and
+    network website.
+  read_only: true
+- name: get_world_locations
+  rest: getWorldLocations
+  category: corporate
+  description: Return the scene records behind the interactive Sinclair World corporate experience.
+  read_only: true
+- name: get_world_page
+  rest: getWorldPage
+  category: corporate
+  description: 'Return a single Sinclair World page payload. Returns {"success": false} without the selector
+    the corporate front end supplies.'
+  read_only: true
+- name: get_latest_posts
+  rest: getLatestPosts
+  category: press
+  description: Return the newsroom feed as a pre-rendered HTML list.
+  read_only: true
+- name: list_press_releases
+  rest: listPosts
+  category: press
+  description: Search and page Sinclair press releases with date, category, tag and full-text filters.
+    1,753 records.
+  read_only: true
+- name: get_press_release
+  rest: getPost
+  category: press
+  description: Retrieve one press release by id.
+  read_only: true
+- name: list_pages
+  rest: listPages
+  category: corporate
+  description: List corporate site pages.
+  read_only: true
+- name: get_page
+  rest: getPage
+  category: corporate
+  description: Retrieve one corporate page by id.
+  read_only: true
+- name: list_media
+  rest: listMedia
+  category: media
+  description: List media library assets including station logos and press imagery.
+  read_only: true
+- name: get_media
+  rest: getMedia
+  category: media
+  description: Retrieve one media item by id.
+  read_only: true
+- name: list_categories
+  rest: listCategories
+  category: taxonomy
+  description: List press release categories.
+  read_only: true
+- name: get_category
+  rest: getCategory
+  category: taxonomy
+  description: Retrieve one category by id.
+  read_only: true
+- name: list_tags
+  rest: listTags
+  category: taxonomy
+  description: List post tags. Empty on this site.
+  read_only: true
+- name: list_comments
+  rest: listComments
+  category: press
+  description: List comments. Empty on this site.
+  read_only: true
+- name: search_site
+  rest: search
+  category: search
+  description: Search across Sinclair press releases and corporate pages.
+  read_only: true
+- name: list_types
+  rest: listTypes
+  category: schema
+  description: List content types exposed by the API.
+  read_only: true
+- name: list_taxonomies
+  rest: listTaxonomies
+  category: schema
+  description: List taxonomies exposed by the API.
+  read_only: true
+- name: list_statuses
+  rest: listStatuses
+  category: schema
+  description: List publication statuses exposed by the API.
+  read_only: true
+- name: get_oembed
+  rest: getOEmbed
+  category: embed
+  description: Return the oEmbed 1.0 representation of a Sinclair corporate URL.
+  read_only: true
 coverage:
   operations_in_spec: 20
   tools_derived: 20
   write_tools: 0
-  note: >-
-    Every tool is read-only because every operation on the public surface is a GET.
-    Input schemas would be inherited directly from the OpenAPI parameters, which carry
-    real enum, minimum, maximum and default constraints read from the live route
-    descriptors.
+  note: Every tool is read-only because every operation on the public surface is a GET. Input schemas
+    would be inherited directly from the OpenAPI parameters, which carry real enum, minimum, maximum and
+    default constraints read from the live route descriptors.
 caveats:
-  - No Sinclair MCP endpoint exists. Do not wire a client at any URL.
-  - >-
-    Access-Control-Allow-Origin is pinned to https://sbgi.net, so a browser-hosted MCP
-    client cannot call this surface. A server-side one can.
-  - >-
-    getStationMap returns 136 KB and getWorldLocations 92 KB unpaginated. Any real MCP
-    server over this surface would need to project or chunk those responses rather than
-    return them whole into a context window.
+- No Sinclair MCP endpoint exists. Do not wire a client at any URL.
+- Access-Control-Allow-Origin is pinned to https://sbgi.net, so a browser-hosted MCP client cannot call
+  this surface. A server-side one can.
+- getStationMap returns 136 KB and getWorldLocations 92 KB unpaginated. Any real MCP server over this
+  surface would need to project or chunk those responses rather than return them whole into a context
+  window.
+deployment:
+  mode: none
+  verified: derived
+  tools: 20
+  checked: '2026-08-12'
+  source: catalog MCP census
