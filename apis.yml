@@ -44,7 +44,7 @@ image: https://avatars.githubusercontent.com/u/api-evangelist
 url: https://github.com/api-evangelist/sinclair-broadcast-group
 created: '2026-05-05'
 modified: '2026-08-12'
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 tags:
   - Broadcasting
   - Television
