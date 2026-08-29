@@ -1,0 +1,26 @@
+slug: sinclair-broadcast-group
+provider: Sinclair, Inc.
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Media, Entertainment & Telecom Content
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Press
+  spec_file: sinclair-broadcast-group-press-api-openapi.yml
+  capability_id: BC-850.40
+  capability_id_l1: BC-850
+  capability_name: Media Relations Management
+  confidence: 0.72
+  evidence: GET /sbg/v1/latest-posts 'Pre-rendered HTML list of the most recent Sinclair press releases';
+    GET /wp/v2/posts 'List Sinclair press releases and newsroom posts.'
+  reason: The operations expose the company's press releases and newsroom posts, which is corporate communications
+    via press releases — Media Relations Management. Confidence tempered because the underlying surface
+    is generic WordPress post reads.

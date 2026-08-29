@@ -294,6 +294,9 @@ apis:
   - type: Lifecycle
     url: lifecycle/sinclair-broadcast-group-lifecycle.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/sinclair-broadcast-group-capability-edges.yml
+    name: Sinclair, Inc. Business Capability Map
   - type: Overlay
     url: overlays/sinclair-broadcast-group-content-overlay.yaml
   - type: MCPServer
