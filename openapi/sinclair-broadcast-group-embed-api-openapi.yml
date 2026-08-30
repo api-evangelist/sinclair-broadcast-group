@@ -1,0 +1,95 @@
+openapi: 3.2.0
+info:
+  title: Sinclair Corporate Content Embed API
+  version: wp/v2 + sbg/v1
+  summary: The public read surface of Sinclair, Inc.'s corporate site.
+  description: 'Sinclair, Inc. does not run a developer program, but its corporate site at sbgi.net serves a live, unauthenticated WordPress REST API. Alongside the standard `wp/v2` content routes, Sinclair publishes a first-party `sbg/v1` namespace whose `station-map` route returns the company''s full television station footprint (call letters, network affiliation, DMA and DMA rank, ownership status, address) and whose `rsn-map` route returns the regional sports network territories.
+
+
+    This document was DERIVED from the route descriptors WordPress publishes at https://sbgi.net/wp-json/ and restricted to the routes verified to answer anonymously with HTTP 200 on 2026-08-12. Write methods and privileged routes (users, settings, plugins, wp-admin namespaces) are advertised by the index but return HTTP 401 without credentials and are deliberately excluded.
+
+
+    Sinclair publishes no reference documentation, no terms of use and no rate limits for this surface. Treat it as an undocumented public read surface, not a supported product.'
+  contact:
+    name: Sinclair, Inc.
+    url: https://sbgi.net
+servers:
+- url: https://sbgi.net/wp-json
+  description: Sinclair corporate site WordPress REST API.
+tags:
+- name: Embed
+  description: oEmbed representations of Sinclair corporate URLs.
+paths:
+  /oembed/1.0/embed:
+    get:
+      operationId: getOEmbed
+      summary: oEmbed 1.
+      description: oEmbed 1.0 representation of a Sinclair corporate URL.
+      tags:
+      - Embed
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - array
+                - object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Not authenticated for a privileged context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: url
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+        description: The URL of the resource for which to fetch oEmbed data.
+      - name: format
+        in: query
+        required: false
+        schema:
+          default: json
+      - name: maxwidth
+        in: query
+        required: false
+        schema:
+          default: 600
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST API error envelope returned by every 4xx/5xx on this host.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+      required:
+      - code
+      - message

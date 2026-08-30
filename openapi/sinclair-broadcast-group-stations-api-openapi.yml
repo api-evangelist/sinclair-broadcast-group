@@ -1,0 +1,111 @@
+openapi: 3.2.0
+info:
+  title: Sinclair Corporate Content Stations API
+  version: wp/v2 + sbg/v1
+  summary: The public read surface of Sinclair, Inc.'s corporate site.
+  description: 'Sinclair, Inc. does not run a developer program, but its corporate site at sbgi.net serves a live, unauthenticated WordPress REST API. Alongside the standard `wp/v2` content routes, Sinclair publishes a first-party `sbg/v1` namespace whose `station-map` route returns the company''s full television station footprint (call letters, network affiliation, DMA and DMA rank, ownership status, address) and whose `rsn-map` route returns the regional sports network territories.
+
+
+    This document was DERIVED from the route descriptors WordPress publishes at https://sbgi.net/wp-json/ and restricted to the routes verified to answer anonymously with HTTP 200 on 2026-08-12. Write methods and privileged routes (users, settings, plugins, wp-admin namespaces) are advertised by the index but return HTTP 401 without credentials and are deliberately excluded.
+
+
+    Sinclair publishes no reference documentation, no terms of use and no rate limits for this surface. Treat it as an undocumented public read surface, not a supported product.'
+  contact:
+    name: Sinclair, Inc.
+    url: https://sbgi.net
+servers:
+- url: https://sbgi.net/wp-json
+  description: Sinclair corporate site WordPress REST API.
+tags:
+- name: Stations
+  description: Sinclair's owned, operated and managed television station footprint.
+paths:
+  /sbg/v1/station-map:
+    get:
+      operationId: getStationMap
+      summary: Every Sinclair-owned or operated television station plotted for the corporate station map, with call letters, network affiliation, DMA name and rank, ownership status (O&O / JSA / SSA), logo and street address.
+      description: Every Sinclair-owned or operated television station plotted for the corporate station map, with call letters, network affiliation, DMA name and rank, ownership status (O&O / JSA / SSA), logo and street address.
+      tags:
+      - Stations
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - array
+                - object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Not authenticated for a privileged context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /sbg/v1/rsn-map:
+    get:
+      operationId: getRsnMap
+      summary: Regional sports network territories with marker location, logo, covered states, teams carried and the network website.
+      description: Regional sports network territories with marker location, logo, covered states, teams carried and the network website.
+      tags:
+      - Stations
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - array
+                - object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Not authenticated for a privileged context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST API error envelope returned by every 4xx/5xx on this host.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+      required:
+      - code
+      - message
