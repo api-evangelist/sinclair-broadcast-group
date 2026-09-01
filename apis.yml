@@ -52,7 +52,7 @@ accessModel:
     - https://sbgi.net/wp-json/sbg/v1/station-map
   generated: '2026-08-12'
   method: probed
-image: https://avatars.githubusercontent.com/u/api-evangelist
+image: ''
 url: https://github.com/api-evangelist/sinclair-broadcast-group
 created: '2026-05-05'
 modified: '2026-08-12'
