@@ -294,6 +294,8 @@ apis:
   - type: Lifecycle
     url: lifecycle/sinclair-broadcast-group-lifecycle.yml
 common:
+  - type: Website
+    url: https://www.sbgi.net/
   - type: CapabilityMap
     url: capabilities/sinclair-broadcast-group-capability-edges.yml
     name: Sinclair, Inc. Business Capability Map
