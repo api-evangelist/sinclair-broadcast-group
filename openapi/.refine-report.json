@@ -1,0 +1,34 @@
+{
+  "provider": "sinclair-broadcast-group",
+  "sources": [
+    "_original/sinclair-broadcast-group-content-openapi.yml"
+  ],
+  "outputs": [
+    "sinclair-broadcast-group-corporate-api-openapi.yml",
+    "sinclair-broadcast-group-embed-api-openapi.yml",
+    "sinclair-broadcast-group-media-api-openapi.yml",
+    "sinclair-broadcast-group-press-api-openapi.yml",
+    "sinclair-broadcast-group-schema-api-openapi.yml",
+    "sinclair-broadcast-group-search-api-openapi.yml",
+    "sinclair-broadcast-group-stations-api-openapi.yml",
+    "sinclair-broadcast-group-taxonomy-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sinclair-broadcast-group-content-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sinclair-broadcast-group-corporate-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinclair-broadcast-group-embed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinclair-broadcast-group-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinclair-broadcast-group-press-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinclair-broadcast-group-schema-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinclair-broadcast-group-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinclair-broadcast-group-stations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sinclair-broadcast-group-taxonomy-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

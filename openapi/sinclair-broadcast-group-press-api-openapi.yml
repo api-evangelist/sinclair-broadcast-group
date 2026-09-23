@@ -3,13 +3,7 @@ info:
   title: Sinclair Corporate Content Press API
   version: wp/v2 + sbg/v1
   summary: The public read surface of Sinclair, Inc.'s corporate site.
-  description: 'Sinclair, Inc. does not run a developer program, but its corporate site at sbgi.net serves a live, unauthenticated WordPress REST API. Alongside the standard `wp/v2` content routes, Sinclair publishes a first-party `sbg/v1` namespace whose `station-map` route returns the company''s full television station footprint (call letters, network affiliation, DMA and DMA rank, ownership status, address) and whose `rsn-map` route returns the regional sports network territories.
-
-
-    This document was DERIVED from the route descriptors WordPress publishes at https://sbgi.net/wp-json/ and restricted to the routes verified to answer anonymously with HTTP 200 on 2026-08-12. Write methods and privileged routes (users, settings, plugins, wp-admin namespaces) are advertised by the index but return HTTP 401 without credentials and are deliberately excluded.
-
-
-    Sinclair publishes no reference documentation, no terms of use and no rate limits for this surface. Treat it as an undocumented public read surface, not a supported product.'
+  description: Sinclair, Inc.
   contact:
     name: Sinclair, Inc.
     url: https://sbgi.net
@@ -23,7 +17,7 @@ paths:
   /sbg/v1/latest-posts:
     get:
       operationId: getLatestPosts
-      summary: Pre-rendered HTML list of the most recent Sinclair press releases, as consumed by the corporate site.
+      summary: Pre-rendered HTML list of the most recent Sinclair press releases, as consumed…
       description: Pre-rendered HTML list of the most recent Sinclair press releases, as consumed by the corporate site.
       tags:
       - Press
@@ -57,7 +51,7 @@ paths:
   /wp/v2/posts:
     get:
       operationId: listPosts
-      summary: List Sinclair press releases and newsroom posts.
+      summary: List Sinclair press releases and newsroom posts
       description: List Sinclair press releases and newsroom posts.
       tags:
       - Press
@@ -357,7 +351,7 @@ paths:
   /wp/v2/posts/{id}:
     get:
       operationId: getPost
-      summary: Retrieve a single press release by id.
+      summary: Retrieve a single press release by id
       description: Retrieve a single press release by id.
       tags:
       - Press
@@ -421,7 +415,7 @@ paths:
   /wp/v2/comments:
     get:
       operationId: listComments
-      summary: List comments.
+      summary: List comments
       description: List comments. Sinclair's corporate site returns an empty collection.
       tags:
       - Press

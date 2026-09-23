@@ -3,13 +3,7 @@ info:
   title: Sinclair Corporate Content Stations API
   version: wp/v2 + sbg/v1
   summary: The public read surface of Sinclair, Inc.'s corporate site.
-  description: 'Sinclair, Inc. does not run a developer program, but its corporate site at sbgi.net serves a live, unauthenticated WordPress REST API. Alongside the standard `wp/v2` content routes, Sinclair publishes a first-party `sbg/v1` namespace whose `station-map` route returns the company''s full television station footprint (call letters, network affiliation, DMA and DMA rank, ownership status, address) and whose `rsn-map` route returns the regional sports network territories.
-
-
-    This document was DERIVED from the route descriptors WordPress publishes at https://sbgi.net/wp-json/ and restricted to the routes verified to answer anonymously with HTTP 200 on 2026-08-12. Write methods and privileged routes (users, settings, plugins, wp-admin namespaces) are advertised by the index but return HTTP 401 without credentials and are deliberately excluded.
-
-
-    Sinclair publishes no reference documentation, no terms of use and no rate limits for this surface. Treat it as an undocumented public read surface, not a supported product.'
+  description: Sinclair, Inc.
   contact:
     name: Sinclair, Inc.
     url: https://sbgi.net
@@ -23,7 +17,7 @@ paths:
   /sbg/v1/station-map:
     get:
       operationId: getStationMap
-      summary: Every Sinclair-owned or operated television station plotted for the corporate station map, with call letters, network affiliation, DMA name and rank, ownership status (O&O / JSA / SSA), logo and street address.
+      summary: Every Sinclair-owned or operated television station plotted for the corporate…
       description: Every Sinclair-owned or operated television station plotted for the corporate station map, with call letters, network affiliation, DMA name and rank, ownership status (O&O / JSA / SSA), logo and street address.
       tags:
       - Stations
@@ -57,7 +51,7 @@ paths:
   /sbg/v1/rsn-map:
     get:
       operationId: getRsnMap
-      summary: Regional sports network territories with marker location, logo, covered states, teams carried and the network website.
+      summary: Regional sports network territories with marker location, logo, covered states…
       description: Regional sports network territories with marker location, logo, covered states, teams carried and the network website.
       tags:
       - Stations
