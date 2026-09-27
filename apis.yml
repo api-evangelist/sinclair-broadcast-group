@@ -1,4 +1,4 @@
-name: Sinclair, Inc.
+name: Sinclair
 description: >-
   Sinclair, Inc. (Nasdaq: SBGI), formerly Sinclair Broadcast Group, is a
   diversified media company and one of the largest U.S. local television
@@ -64,243 +64,42 @@ tags:
   - Sports Media
   - Regional Sports Networks
   - Digital Marketing
+  - AdTech
+  - NextGen TV
+  - ATSC 3.0
+  - Media
+tags_raw:
+  - Broadcasting
+  - Television
+  - Local News
+  - Sports Media
+  - Regional Sports Networks
+  - Digital Marketing
   - Advertising Technology
   - NextGen TV
   - ATSC 3.0
   - Media
 apis:
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-corporate-api
-  name: Sinclair, Inc. Corporate API
-  description: Corporate pages and the interactive 'Sinclair World' experience.
-  humanURL: https://sbgi.net/
+- aid: sinclair-broadcast-group:sbgi-net-website-wordpress-rest
+  name: Sinclair, Inc. Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the Sinclair, Inc. website at sbgi.net: the
+    route index of the site''s content management system, catalogued as one site surface rather than as
+    separate APIs.'
   baseURL: https://sbgi.net/wp-json
   tags:
-  - Corporate
+  - WordPress
+  x-surface: platform-generated
   properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-corporate-api-openapi.yml
   - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-embed-api
-  name: Sinclair, Inc. Embed API
-  description: oEmbed representations of Sinclair corporate URLs.
-  humanURL: https://sbgi.net/
-  baseURL: https://sbgi.net/wp-json
-  tags:
-  - Embed
-  properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-embed-api-openapi.yml
-  - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-media-api
-  name: Sinclair, Inc. Media API
-  description: Media library assets served from the corporate site.
-  humanURL: https://sbgi.net/
-  baseURL: https://sbgi.net/wp-json
-  tags:
-  - Media
-  properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-media-api-openapi.yml
-  - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-press-api
-  name: Sinclair, Inc. Press API
-  description: Press releases, newsroom posts and comments.
-  humanURL: https://sbgi.net/
-  baseURL: https://sbgi.net/wp-json
-  tags:
-  - Press
-  properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-press-api-openapi.yml
-  - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-schema-api
-  name: Sinclair, Inc. Schema API
-  description: 'Self-describing metadata: content types, taxonomies and statuses.'
-  humanURL: https://sbgi.net/
-  baseURL: https://sbgi.net/wp-json
-  tags:
-  - Schema
-  properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-schema-api-openapi.yml
-  - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-search-api
-  name: Sinclair, Inc. Search API
-  description: Cross-content search over the corporate site.
-  humanURL: https://sbgi.net/
-  baseURL: https://sbgi.net/wp-json
-  tags:
-  - Search
-  properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-search-api-openapi.yml
-  - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-stations-api
-  name: Sinclair, Inc. Stations API
-  description: Sinclair's owned, operated and managed television station footprint.
-  humanURL: https://sbgi.net/
-  baseURL: https://sbgi.net/wp-json
-  tags:
-  - Stations
-  properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-stations-api-openapi.yml
-  - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
-- aid: sinclair-broadcast-group:sinclair-broadcast-group-taxonomy-api
-  name: Sinclair, Inc. Taxonomy API
-  description: Categories and tags that classify press releases.
-  humanURL: https://sbgi.net/
-  baseURL: https://sbgi.net/wp-json
-  tags:
-  - Taxonomy
-  properties:
-  - type: OpenAPI
-    url: openapi/sinclair-broadcast-group-taxonomy-api-openapi.yml
-  - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
-  - type: APIReference
-    url: https://sbgi.net/wp-json/
-  - type: Authentication
-    url: authentication/sinclair-broadcast-group-authentication.yml
-  - type: Conventions
-    url: conventions/sinclair-broadcast-group-conventions.yml
-  - type: ErrorCatalog
-    url: errors/sinclair-broadcast-group-problem-types.yml
-  - type: DataModel
-    url: data-model/sinclair-broadcast-group-data-model.yml
-  - type: RateLimits
-    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
-  - type: Conformance
-    url: conformance/sinclair-broadcast-group-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
+    url: https://sbgi.net/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 common:
   - type: Website
     url: https://www.sbgi.net/
   - type: CapabilityMap
     url: capabilities/sinclair-broadcast-group-capability-edges.yml
     name: Sinclair, Inc. Business Capability Map
-  - type: Overlay
-    url: overlays/sinclair-broadcast-group-content-overlay.yaml
   - type: X-MCPServerCandidate
     url: mcp/sinclair-broadcast-group-mcp.yml
     note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
@@ -464,6 +263,20 @@ common:
           Using ATSC 3.0 spectrum for targeted advertising, automotive
           telematics, public-safety datacasting, and broadcast-IP
           interoperability.
+  - type: Authentication
+    url: authentication/sinclair-broadcast-group-authentication.yml
+  - type: Conventions
+    url: conventions/sinclair-broadcast-group-conventions.yml
+  - type: ErrorCatalog
+    url: errors/sinclair-broadcast-group-problem-types.yml
+  - type: DataModel
+    url: data-model/sinclair-broadcast-group-data-model.yml
+  - type: RateLimits
+    url: rate-limits/sinclair-broadcast-group-rate-limits.yml
+  - type: Conformance
+    url: conformance/sinclair-broadcast-group-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/sinclair-broadcast-group-lifecycle.yml
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
@@ -472,3 +285,4 @@ x-enrichment:
   status: enriched
   artifacts_added: 19
   pass: local-v1
+x-legal-name: Sinclair, Inc.
