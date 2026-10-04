@@ -1,32 +1,30 @@
-# Kin Score artifact — sinclair-broadcast-group — 2026-09-01T222808
+# Kin Score artifact — sinclair-broadcast-group — 2026-09-22T213221
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: sinclair-broadcast-group
-  schema_version: 0.18.0
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T222808
-  composite: 36.2
+  schema_version: 0.22.0
+  scored_at: '2026-09-22'
+  run_ts: 2026-09-22T213221
+  composite: 34.7
   band: thin
   facets:
     discoverability: 72.2
-    contract_quality: 52.4
-    governance: 4.5
+    contract_quality: 46.3
+    contract_governance: 4.5
     operational_transparency: 13.2
     developer_ergonomics: 47.0
-    commercial_clarity: 21.1
-    contract_governance: 4.5
     access_clarity: 21.1
   agent_readiness:
-    score: 28.5
+    score: 24.6
     band: agent-aware
     dimensions:
       spec_presence: true
       agentic_access: false
-      reversibility_documented: na
+      reversibility_documented: false
       mcp_server: false
       auth_clarity: bearer
-      idempotency: na
+      idempotency: false
       error_semantics: verified
       openapi_examples: false
       rate_limit_signal: documented
@@ -35,7 +33,7 @@ kin_score:
       well_known_catalog: false
       consent_identity: false
       agent_card: false
-      dry_run_mode: na
+      dry_run_mode: false
       delegated_identity: false
       protected_resource_metadata: false
       dynamic_client_registration: false
@@ -44,8 +42,3 @@ kin_score:
     mcp: derived
     skills: derived
     conformance: derived
-    contracts:
-      total: 8
-      derived: 0
-      coverage: 0.0
-      callable: 100.0
