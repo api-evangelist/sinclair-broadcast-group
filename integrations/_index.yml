@@ -25,3 +25,55 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: sinclair-broadcast-group-eidr-entertainment-id-registry
+  label: EIDR (Entertainment ID Registry)
+  partner_name: EIDR (Entertainment ID Registry)
+  category: film / TV content identifier registry
+  type: register
+  channel: standard-directory
+  evidence: https://www.eidr.org/eidr-participants
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: EIDR contributors and participants (eidr.org/eidr-participants)
+    standard: EIDR
+    spec_file: null
+    role: eidr-participant
+    registered_name: Sinclair
+    register_id: https://www.eidr.org/eidr-participants
+    matched_domain: null
+    matched_by: register-name
+    signal_note: 'participation only: a listing on the register, never counted'
+    detected_by: sweep-film-media-identifiers-eidr.py
+    detected: '2026-10-21'
+    register_name_note: register-name 'sinclair' = sinclair-broadcast-group; no wikidata P856
+    logo_alt: Sinclair-200-x-90
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: sinclair-broadcast-group-dpp-digital-production-partnership
+  label: DPP (Digital Production Partnership)
+  partner_name: DPP (Digital Production Partnership)
+  category: media supply-chain industry body
+  type: register
+  channel: standard-directory
+  evidence: https://www.thedpp.com/members-directory
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: DPP members directory (thedpp.com/members-directory)
+    standard: DPP
+    spec_file: null
+    role: dpp-member
+    registered_name: Sinclair
+    register_id: https://www.thedpp.com/members-directory
+    matched_domain: sbgi.net
+    matched_by: domain
+    signal_note: 'participation only: a listing on the register, never counted'
+    detected_by: sweep-film-media-identifiers-eidr.py
+    detected: '2026-10-21'
+    dpp_category: content-provider
+  status: not-a-workflow
+  arazzo: null
