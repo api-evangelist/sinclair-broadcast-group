@@ -1,4 +1,4 @@
-# Sinclair, Inc. (Sinclair Broadcast Group)
+# Sinclair
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,80 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-API Evangelist profile for **Sinclair, Inc.** (Nasdaq: SBGI), the holding
-company reorganized in 2023 from the former Sinclair Broadcast Group. Fortune
-1000 (rank 622). Headquartered in Hunt Valley, Maryland.
+Sinclair, Inc. (Nasdaq: SBGI), formerly Sinclair Broadcast Group, is a diversified media company and one of the largest U.S. local television broadcasters. The company operates 177-185+ TV stations across roughly 79-86 markets affiliated with all major broadcast networks (Fox, NBC, CBS, ABC, MyNetworkTV, The CW), owns Tennis Channel, holds a stake in YES Network, and runs digital multicast networks Comet, Charge!, Roar, and The Nest. Sinclair Ventures houses the company's non-broadcast operations, including ad/martech units (AMP, Drive Auto, Free State, Digital Remedy/Compulse) and broadcast technology subsidiaries (Dielectric, ONE Media Technologies, Bitpath, CAST.ERA, Broadspan Wireless). In 2019 Sinclair acquired the Fox Sports regional sports networks for ~$9.6 billion through a Diamond Sports Group joint venture; Diamond was rebranded Bally Sports in 2021, filed Chapter 11 in March 2023, exited bankruptcy in January 2025 as Main Street Sports Group, rebranded again as FanDuel Sports Network, and is winding down operations in mid-2026. Sinclair runs no developer program and publishes no API documentation, but its corporate site at sbgi.net serves a live, public, unauthenticated WordPress REST API whose first-party sbg/v1 namespace publishes the company's full television station footprint — 197 primary stations and 365 digital subchannels across 87 Nielsen DMAs, with network affiliation, market rank and O&O/JSA/LMA/MSA ownership status attached to every call sign — alongside 1,753 press releases and the regional sports network territories.
 
-- Portal: <https://sbgi.net>
-- Investor Relations: <https://sbgi.net/investor-relations/>
-- GitHub: <https://github.com/SinclairBroadcastGroup>
+**Areas:** Broadcasting · Television · Local News · Sports Media · Regional Sports Networks · Digital Marketing · AdTech · NextGen TV · ATSC 3.0 · Media
 
-## What Sinclair Does
+## Sinclair on APIs.io
 
-Sinclair is a diversified U.S. media company built around three pillars:
+Everything profiled for Sinclair is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sinclair-broadcast-group/](https://apis.io/providers/sinclair-broadcast-group/)** — or go straight to one of the APIs or properties below.
 
-1. **Sinclair Broadcast Group** — roughly 177-185 owned-and-operated and
-   affiliate-managed local TV stations across ~79-100 markets, reaching
-   approximately 40% of U.S. households. Largest owner of stations affiliated
-   with Fox, NBC, CBS, ABC, MyNetworkTV, The CW, and The CW Plus. Produces
-   The National Desk and Sharyl Attkisson's Full Measure for its footprint.
+### APIs (1)
 
-2. **Sinclair Ventures** — non-broadcast operating units:
-   - **Tennis Channel** (acquired March 2016 for $350M; ~38M U.S. pay-TV
-     households as of late 2023) plus T2 (FAST), Pickleball.tv (with the
-     United Pickleball Association), and a Tennis Channel DTC subscription
-     launched November 2024.
-   - **Digital multicast networks**: Comet, Charge!, Roar, and The Nest
-     (launched October 2023 in the Stadium slot).
-   - **AMP Sales & Marketing Solutions** (multi-platform local ad sales)
-     with vertical units Drive Auto and Free State.
-   - **Compulse / Digital Remedy** martech and managed services
-     (Compulse 360 SaaS continues under Digital Remedy branding).
-   - **Broadcast technology**: ONE Media Technologies (ATSC 3.0 / NextGen TV,
-     dynamic ad insertion, B2X broadcast-as-IP), Dielectric (transmitters and
-     RF systems), Bitpath, CAST.ERA, and Broadspan Wireless.
+- [Sinclair, Inc. Website (WordPress REST)](https://apis.io/apis/sinclair-broadcast-group/sbgi-net-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Sinclair, Inc. website at sbgi.net: the route index of the site's content management system, catalogued as…
 
-3. **Investments** — minority stake in YES Network (Yankees / Brooklyn Nets).
+### Published properties
 
-## The Diamond / Bally Sports / Main Street / FanDuel Sports Network Story
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-In **August 2019** Sinclair (via a Diamond Sports Group JV with Byron Allen's
-Allen Media Group) acquired the former Fox Sports Networks regional sports
-networks from Disney for **~$9.6 billion** (initially valued at $10.6B).
-Diamond held local TV rights to 42 pro teams across MLB, NBA, and NHL.
+#### MCP servers (1)
 
-- **March 2021** — RSNs rebranded as **Bally Sports** under a 10-year naming
-  rights deal with Bally's Corporation.
-- **March 14, 2023** — Diamond filed **Chapter 11** after missing a $140M
-  interest payment.
-- **January 2024** — Sinclair agreed to a **$495M cash settlement** with
-  Diamond's creditors; Amazon committed $115M / 15% (later withdrawn).
-- **November 2024** — Hudson Bay Capital and PGIM took ownership; Sinclair's
-  equity in Diamond was wiped out.
-- **October 21, 2024** — Networks rebranded as the **FanDuel Sports Network**.
-- **January 2, 2025** — Exited bankruptcy as **Main Street Sports Group**.
-- **February 2026** — Lost all 9 remaining MLB teams over missed payments;
-  Main Street intends to cease operations in mid-April 2026 after the NBA and
-  NHL seasons conclude.
+Model Context Protocol servers that expose the API to agents.
 
-The RSN business is no longer a consolidated Sinclair operation; it is
-documented here for historical completeness because the joint venture
-materially shaped Sinclair's recent financial trajectory.
+- [sinclair-broadcast-group-mcp.yml](https://apis.io/servers/sinclair-broadcast-group/sinclair-broadcast-group-mcp-yml/)
 
-## APIs
+#### Collections (1)
 
-**Sinclair publishes no public developer APIs.** This profile catalogues the
-organization, its brands and subsidiaries, and the spun-off RSN business. No
-OpenAPI, AsyncAPI, JSON Schema, capability, or example artifacts are included
-because there is no public API surface to back them.
+Postman and Open Collection request collections.
 
-## Files
+- [Moved to /providers/sinclair-broadcast-group/](https://apis.io/collections/sinclair-broadcast-group/open-sinclair-broadcast-group-content/)
 
-| File | Purpose |
-|------|---------|
-| [`apis.yml`](apis.yml) | APIs.yml index documenting Sinclair brands, subsidiaries, features, solutions, integrations, and use cases. |
-| [`README.md`](README.md) | This profile. |
+#### Security (3)
 
-## License
+Authentication, trust centre, and vulnerability disclosure.
 
-Catalog content under [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
+- [Sinclair Broadcast Group Authentication](https://apis.io/security/sinclair-broadcast-group/sinclair-broadcast-group-authentication/)
+- [Sinclair Broadcast Group Domain Security](https://apis.io/security/sinclair-broadcast-group/sinclair-broadcast-group-domain-security/)
+- [Sinclair Broadcast Group Vulnerability Disclosure](https://apis.io/security/sinclair-broadcast-group/sinclair-broadcast-group-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Sinclair Broadcast Group Plans Pricing](https://apis.io/plans/sinclair-broadcast-group/sinclair-broadcast-group-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Sinclair Broadcast Group Rate Limits](https://apis.io/rate-limits/sinclair-broadcast-group/sinclair-broadcast-group-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.sbgi.net/)
+- [Support](https://sbgi.net/contact-us/)
+- [Blog](https://sbgi.net/feed/)
+- [Terms of service](https://sbgi.net/terms-conditions/)
+- [Privacy policy](https://sbgi.net/privacy-policy/)
+- [GitHub](https://github.com/SinclairBroadcastGroup)
+
+## API Evangelist rating
+
+**Kin Score 22.8** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 39.9 |
+| Access clarity | 21.1 |
+
+**Agent readiness 8.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sinclair-broadcast-group/](https://apis.io/providers/sinclair-broadcast-group/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sinclair: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sinclair-broadcast-group/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
